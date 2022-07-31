@@ -3,6 +3,7 @@
 
 # Git version checking
 
+# TODO: Rewrite to PowerShell commands
 <#
 autoload -Uz is-at-least
 git_version="${${(As: :)$(git version 2>/dev/null)}[3]}"
@@ -17,12 +18,14 @@ git_version="${${(As: :)$(git version 2>/dev/null)}[3]}"
 # the plugin, before being pulled in to core lib/git.zsh as git_current_branch()
 # to fix the core -> git plugin dependency.
 
+# TODO: Rewrite to PowerShell commands
 <#
 function current_branch() {
   git_current_branch
 }
 #>
 
+# TODO: Rewrite to PowerShell commands
 # Pretty log messages
 <#
 function _git_log_prettily(){
@@ -33,6 +36,7 @@ function _git_log_prettily(){
 compdef _git _git_log_prettily=git-log
 #>
 
+# TODO: Rewrite to PowerShell commands
 # Warn if the current branch is a WIP
 <#
 function work_in_progress() {
@@ -40,6 +44,7 @@ function work_in_progress() {
 }
 #>
 
+# TODO: Rewrite to PowerShell commands
 # Check if main exists and use instead of master
 
 <#
@@ -56,6 +61,7 @@ function git_main_branch() {
 }
 #>
 
+# TODO: Rewrite to PowerShell commands
 # Check for develop and similarly named branches
 <#
 function git_develop_branch() {
@@ -101,10 +107,12 @@ New-Alias gba Alias-gba
 Function Alias-gbd {git branch -d $args}
 New-Alias gbd Alias-gbd
 
+# TODO: Rewrite with PowerShell commands
 <#
 alias gbda='git branch --no-color --merged | command grep -vE "^([+*]|\s*($(git_main_branch)|$(git_develop_branch))\s*$)" | command xargs git branch -d 2>/dev/null'
 #>
 
+# TODO: conflicts with existing alias gdb
 <#
 Function Alias-gbD {git branch -D $args}
 New-Alias gbD Alias-gbD
@@ -127,15 +135,14 @@ New-Alias gbsr Alias-gbsr
 Function Alias-gbss {git bisect start $args}
 New-Alias gbss Alias-gbss 
 
+# TODO: Conflicts with PowerShell alias gc -> Get-Content
 <#
 Function Alias-gc {git commit -v}
 New-Alias gc Alias-gc 
 #>
 
-<#
-Function Alias-gc {git commit -v --amend}
-New-Alias gc! Alias-gc
-#>
+Function Alias-gc! {git commit -v --amend $args}
+New-Alias gc! Alias-gc!
 
 Function Alias-gcn {git commit -v --no-edit --amend $args}
 New-Alias gcn! Alias-gcn 
@@ -156,6 +163,7 @@ New-Alias gcas Alias-gcas
 Function Alias-gcasm {git commit -a -s -m $args}
 New-Alias gcasm Alias-gcasm 
 
+# TODO: Conflicts with PowerShell alias gcb -> Get-Clipboard
 <#
 Function Alias-gcb {git checkout -b}
 New-Alias gcb Alias-gcb 
@@ -164,6 +172,7 @@ New-Alias gcb Alias-gcb
 Function Alias-gcf {git config --list $args}
 New-Alias gcf Alias-gcf 
 
+# TODO: Rewrite to PowerShell commands
 <#
 function gccd() {
   command git clone --recurse-submodules "$@"
@@ -177,11 +186,13 @@ New-Alias gcl Alias-gcl
 Function Alias-gclean {git clean -id $args}
 New-Alias gclean Alias-gclean 
 
+# TODO: Rewrite to PowerShell commands. See: https://stackoverflow.com/questions/2416662/what-are-the-powershell-equivalents-of-bashs-and-operators
 <#
 Function Alias-gpristine {git reset --hard && git clean -dffx}
 New-Alias gpristine Alias-gpristine 
 #>
 
+# TODO: Uncomment when git_main_branch function will be implemented
 <#
 Function Alias-gcm {git checkout $(git_main_branch)}
 New-Alias gcm Alias-gcm
@@ -204,6 +215,7 @@ New-Alias gcpa Alias-gcpa
 Function Alias-gcpc {git cherry-pick --continue $args}
 New-Alias gcpc Alias-gcpc 
 
+# TODO: Conflicts with default PowerShell alias gcs -> Get-PSCallStack
 <#
 Function Alias-gcs {git commit -S}
 New-Alias gcs Alias-gcs 
@@ -221,16 +233,15 @@ New-Alias gdca Alias-gdca
 Function Alias-gdcw {git diff --cached --word-diff $args}
 New-Alias gdcw Alias-gdcw 
 
-<#
 Function Alias-gdct {git describe --tags $(git rev-list --tags --max-count=1)}
 New-Alias gdct Alias-gdct
-#>
 
 Function Alias-gds {git diff --staged $args}
 New-Alias gds Alias-gds 
 Function Alias-gdt {git diff-tree --no-commit-id --name-only -r $args}
 New-Alias gdt Alias-gdt 
 
+# TODO: Find what is happend here
 <#
 Function Alias-gdup {git diff @{upstream}}
 New-Alias gdup Alias-gdup 
@@ -239,6 +250,7 @@ New-Alias gdup Alias-gdup
 Function Alias-gdw {git diff --word-diff $args}
 New-Alias gdw Alias-gdw 
 
+# TODO: Rewrite to powershell syntax
 <#
 function gdnolock() {
   git diff "$@" ":(exclude)package-lock.json" ":(exclude)*.lock"
@@ -246,6 +258,7 @@ function gdnolock() {
 compdef _git gdnolock=git-diff
 #>
 
+# TODO: Rewrite to powershell syntax
 <#
 function gdv() { git diff -w "$@" | view - }
 compdef _git gdv=git-diff
@@ -254,6 +267,7 @@ compdef _git gdv=git-diff
 Function Alias-gf {git fetch $args}
 New-Alias gf Alias-gf 
 
+# TODO: Rewrite to powershell syntax
 # --jobs=<n> was added in git 2.8
 <#
 is-at-least 2.8 "$git_version" \
@@ -264,6 +278,7 @@ is-at-least 2.8 "$git_version" \
 Function Alias-gfo {git fetch origin $args}
 New-Alias gfo Alias-gfo 
 
+# TODO: Rewrite to powershell commands
 <#
 alias gfg='git ls-files | grep'
 #>
@@ -273,6 +288,7 @@ New-Alias gg Alias-gg
 Function Alias-gga {git gui citool --amend $args}
 New-Alias gga Alias-gga 
 
+# TODO: Rewrite to powershell syntax
 <#
 function ggf() {
   [[ "$#" != 1 ]] && local b="$(git_current_branch)"
@@ -281,6 +297,7 @@ function ggf() {
 compdef _git ggf=git-checkout
 #>
 
+# TODO: Rewrite to powershell syntax
 <#
 function ggfl() {
   [[ "$#" != 1 ]] && local b="$(git_current_branch)"
@@ -289,6 +306,7 @@ function ggfl() {
 compdef _git ggfl=git-checkout
 #>
 
+# TODO: Rewrite to powershell syntax
 <#
 function ggl() {
   if [[ "$#" != 0 ]] && [[ "$#" != 1 ]]; then
@@ -301,6 +319,7 @@ function ggl() {
 compdef _git ggl=git-checkout
 #>
 
+# TODO: Rewrite to powershell syntax
 <#
 function ggp() {
   if [[ "$#" != 0 ]] && [[ "$#" != 1 ]]; then
@@ -313,6 +332,7 @@ function ggp() {
 compdef _git ggp=git-checkout
 #>
 
+# TODO: Rewrite to powershell syntax
 <#
 function ggpnp() {
   if [[ "$#" == 0 ]]; then
@@ -324,6 +344,7 @@ function ggpnp() {
 compdef _git ggpnp=git-checkout
 #>
 
+# TODO: Rewrite to powershell syntax
 <#
 function ggu() {
   [[ "$#" != 1 ]] && local b="$(git_current_branch)"
@@ -332,11 +353,13 @@ function ggu() {
 compdef _git ggu=git-checkout
 #>
 
+# TODO: Uncomment when ggu function will be implemeted. Add args passing to aliases
 <#
 Function Alias-ggpur {ggu}
 New-Alias ggpur Alias-ggpur
 #>
 
+# TODO: Uncomment when git_current_branch will be implemented. Add args passing to aliases
 <#
 Function Alias-ggpull {git pull origin "$(git_current_branch)"}
 New-Alias ggpull Alias-ggpull 
@@ -344,6 +367,7 @@ Function Alias-ggpush {git push origin "$(git_current_branch)"}
 New-Alias ggpush Alias-ggpush 
 #>
 
+# TODO: Uncomment when git_current_branch will be implemented. Add args passing to aliases
 <#
 Function Alias-ggsup {git branch --set-upstream-to=origin/$(git_current_branch)}
 New-Alias ggsup Alias-ggsup 
@@ -357,16 +381,19 @@ New-Alias ghh Alias-ghh
 Function Alias-gignore {git update-index --assume-unchanged $args}
 New-Alias gignore Alias-gignore 
 
+# TODO: Rewrite to PowerShell syntax
 <#
 Function Alias-gignored {git ls-files -v | grep "^[[:lower:]]"}
 New-Alias gignored Alias-gignored 
 #>
 
+# TODO: Uncomment when git_main_branch will be implemented. And add args passing.
 <#
 Function Alias-git-svn-dcommit-push {git svn dcommit && git push github $(git_main_branch):svntrunk}
 New-Alias git-svn-dcommit-push Alias-git-svn-dcommit-push 
 #>
 
+# TODO: Rewrite to powershell syntax
 <#
 Function Alias-gk {\gitk --all --branches &!}
 New-Alias gk Alias-gk 
@@ -374,6 +401,7 @@ Function Alias-gke {\gitk --all $(git log -g --pretty=%h) &!}
 New-Alias gke Alias-gke 
 #>
 
+# TODO: Conflicts with default PowerShell alias gl -> Get-Location
 <#
 Function Alias-gl {git pull}
 New-Alias gl Alias-gl
@@ -408,11 +436,13 @@ New-Alias gloga Alias-gloga
 Function Alias-glp {_git_log_prettily $args}
 New-Alias glp Alias-glp 
 
+# TODO: Conflicts with default PowerShell alias gm -> Get-Member
 <#
 Function Alias-gm {git merge}
 New-Alias gm Alias-gm 
 #>
 
+# TODO: Uncomment when git_main_branch will be implemented
 <#
 Function Alias-gmom {git merge origin/$(git_main_branch)}
 New-Alias gmom Alias-gmom
@@ -421,11 +451,10 @@ New-Alias gmom Alias-gmom
 Function Alias-gmtl {git mergetool --no-prompt $args}
 New-Alias gmtl Alias-gmtl 
 
-<#
-Function Alias-gmtlvim {git mergetool --no-prompt --tool=vimdiff}
+Function Alias-gmtlvim {git mergetool --no-prompt --tool=vimdiff $args}
 New-Alias gmtlvim Alias-gmtlvim
-#>
 
+# TODO: Uncomment when git_main_branch will be implemented
 <#
 Function Alias-gmum {git merge upstream/$(git_main_branch)}
 New-Alias gmum Alias-gmum
@@ -434,6 +463,7 @@ New-Alias gmum Alias-gmum
 Function Alias-gma {git merge --abort $args}
 New-Alias gma Alias-gma 
 
+# TODO: Conflicts with default PowerShell alias gp -> Get-ItemProperty
 <#
 Function Alias-gp {git push}
 New-Alias gp Alias-gp 
@@ -446,6 +476,7 @@ New-Alias gpf Alias-gpf
 Function Alias-gpf {git push --force $args}
 New-Alias gpf! Alias-gpf 
 
+# TODO: Rewrite to PowerShell syntax
 <#
 Function Alias-gpoat {git push origin --all && git push origin --tags}
 New-Alias gpoat Alias-gpoat
@@ -456,6 +487,7 @@ New-Alias gpr Alias-gpr
 Function Alias-gpu {git push upstream $args}
 New-Alias gpu Alias-gpu 
 
+# TODO: Conflicts with default PowerShell alias gpt -> Get-ItemPropertyValue
 <#
 Function Alias-gpv {git push -v}
 New-Alias gpv Alias-gpv 
@@ -472,6 +504,7 @@ New-Alias grba Alias-grba
 Function Alias-grbc {git rebase --continue $args}
 New-Alias grbc Alias-grbc 
 
+# TODO: Uncomment when get_develop_branch will be implemented
 <#
 Function Alias-grbd {git rebase $(git_develop_branch)}
 New-Alias grbd Alias-grbd
@@ -480,11 +513,13 @@ New-Alias grbd Alias-grbd
 Function Alias-grbi {git rebase -i $args}
 New-Alias grbi Alias-grbi 
 
+# TODO: Uncomment when get_main_branch will be implemented
 <#
 Function Alias-grbm {git rebase $(git_main_branch)}
 New-Alias grbm Alias-grbm
 #>
 
+# TODO: Uncomment when get_main_branch will be implemented
 <#
 Function Alias-grbom {git rebase origin/$(git_main_branch)}
 New-Alias grbom Alias-grbom
@@ -501,6 +536,7 @@ New-Alias grh Alias-grh
 Function Alias-grhh {git reset --hard $args}
 New-Alias grhh Alias-grhh 
 
+# TODO: Uncomment when get_current_branch will be implemented
 <#
 Function Alias-groh {git reset origin/$(git_current_branch) --hard}
 New-Alias groh Alias-groh
@@ -523,6 +559,7 @@ New-Alias grss Alias-grss
 Function Alias-grst {git restore --staged $args}
 New-Alias grst Alias-grst 
 
+# TODO: Rewrite to PowerShell syntax
 <#
 Function Alias-grt {cd "$(git rev-parse --show-toplevel || echo .)"}
 New-Alias grt Alias-grt
@@ -552,6 +589,7 @@ New-Alias gss Alias-gss
 Function Alias-gst {git status $args}
 New-Alias gst Alias-gst 
 
+# TODO: Rewrite to PowerShell syntax
 # use the default stash push on git 2.13 and newer
 <#
 is-at-least 2.13 "$git_version" \
@@ -582,11 +620,13 @@ New-Alias gsw Alias-gsw
 Function Alias-gswc {git switch -c $args}
 New-Alias gswc Alias-gswc 
 
+# TODO: Uncomment when git_main_branch will be implemented
 <#
 Function Alias-gswm {git switch $(git_main_branch)}
 New-Alias gswm Alias-gswm
 #>
 
+# TODO: Uncomment when git_develop_branch will be implemented
 <# 
 Function Alias-gswd {git switch $(git_develop_branch)}
 New-Alias gswd Alias-gswd 
@@ -595,11 +635,13 @@ New-Alias gswd Alias-gswd
 Function Alias-gts {git tag -s $args}
 New-Alias gts Alias-gts 
 
+# TODO: Rewrite with PowerShell syntax
 <#
 Function Alias-gtv {git tag | sort -V}
 New-Alias gtv Alias-gtv
 #>
 
+# TODO: Rewrite with PowerShell syntax
 <#
 Function Alias-gtl {gtl(){ git tag --sort=-v:refname -n -l "${1}*" }; noglob gtl}
 New-Alias gtl Alias-gtl 
@@ -608,6 +650,7 @@ New-Alias gtl Alias-gtl
 Function Alias-gunignore {git update-index --no-assume-unchanged}
 New-Alias gunignore Alias-gunignore 
 
+# TODO: Rewrite with PowerShell syntax
 <#
 Function Alias-gunwip {git log -n 1 | grep -q -c "\-\-wip\-\-" && git reset HEAD~1}
 New-Alias gunwip Alias-gunwip
@@ -622,16 +665,19 @@ New-Alias gupa Alias-gupa
 Function Alias-gupav {git pull --rebase --autostash -v $args}
 New-Alias gupav Alias-gupav 
 
+# TODO: Uncomment when git_main_branch will be implemented
 <#
 Function Alias-gupom {git pull --rebase origin $(git_main_branch)}
 New-Alias gupom Alias-gupom
 #>
 
+# TODO: Uncomment when git_main_branch will be implemented
 <#
 Function Alias-gupomi {git pull --rebase=interactive origin $(git_main_branch)}
 New-Alias gupomi Alias-gupomi
 #>
 
+# TODO: Uncomment when git_develop_branch will be implemented
 <#
 Function Alias-glum {git pull upstream $(git_main_branch)}
 New-Alias glum Alias-glum 
@@ -640,6 +686,7 @@ New-Alias glum Alias-glum
 Function Alias-gwch {git whatchanged -p --abbrev-commit --pretty=medium $args}
 New-Alias gwch Alias-gwch 
 
+# TODO: Rewrite with PowerShell syntax
 <#
 Function Alias-gwip {git add -A; git rm $(git ls-files --deleted) 2> /dev/null; git commit --no-verify --no-gpg-sign -m "--wip-- [skip ci]"}
 New-Alias gwip Alias-gwip 
@@ -656,6 +703,7 @@ New-Alias gama Alias-gama
 Function Alias-gamscp {git am --show-current-patch $args}
 New-Alias gamscp Alias-gamscp 
 
+# TODO: Rewrite with PowerShell syntax
 <#
 function grename() {
   if [[ -z "$1" || -z "$2" ]]; then
@@ -672,6 +720,7 @@ function grename() {
 }
 #>
 
+# TODO: Rewrite with PowerShell syntax
 <#
 unset git_version
 #>
