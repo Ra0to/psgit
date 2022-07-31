@@ -2,8 +2,11 @@
 # From https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/git/git.plugin.zsh
 
 # Git version checking
+
+<#
 autoload -Uz is-at-least
 git_version="${${(As: :)$(git version 2>/dev/null)}[3]}"
+#>
 
 #
 # Functions
@@ -13,24 +16,33 @@ git_version="${${(As: :)$(git version 2>/dev/null)}[3]}"
 # Back-compatibility wrapper for when this function was defined here in
 # the plugin, before being pulled in to core lib/git.zsh as git_current_branch()
 # to fix the core -> git plugin dependency.
+
+<#
 function current_branch() {
   git_current_branch
 }
+#>
 
 # Pretty log messages
+<#
 function _git_log_prettily(){
   if ! [ -z $1 ]; then
     git log --pretty=$1
   fi
 }
 compdef _git _git_log_prettily=git-log
+#>
 
 # Warn if the current branch is a WIP
+<#
 function work_in_progress() {
   command git -c log.showSignature=false log -n 1 2>/dev/null | grep -q -- "--wip--" && echo "WIP!!"
 }
+#>
 
 # Check if main exists and use instead of master
+
+<#
 function git_main_branch() {
   command git rev-parse --git-dir &>/dev/null || return
   local ref
@@ -42,8 +54,10 @@ function git_main_branch() {
   done
   echo master
 }
+#>
 
 # Check for develop and similarly named branches
+<#
 function git_develop_branch() {
   command git rev-parse --git-dir &>/dev/null || return
   local branch
@@ -55,173 +69,227 @@ function git_develop_branch() {
   done
   echo develop
 }
+#>
 
 #
 # Aliases
 # (sorted alphabetically)
 #
 
-Function Alias-g {git}
+Function Alias-g {git $args}
 New-Alias g Alias-g
 
-Function Alias-ga {git add}
+Function Alias-ga {git add $args}
 New-Alias ga Alias-ga 
-Function Alias-gaa {git add --all}
+Function Alias-gaa {git add --all $args}
 New-Alias gaa Alias-gaa 
-Function Alias-gapa {git add --patch}
+Function Alias-gapa {git add --patch $args}
 New-Alias gapa Alias-gapa 
-Function Alias-gau {git add --update}
+Function Alias-gau {git add --update $args}
 New-Alias gau Alias-gau 
-Function Alias-gav {git add --verbose}
+Function Alias-gav {git add --verbose $args}
 New-Alias gav Alias-gav 
-Function Alias-gap {git apply}
+Function Alias-gap {git apply $args}
 New-Alias gap Alias-gap 
-Function Alias-gapt {git apply --3way}
+Function Alias-gapt {git apply --3way $args}
 New-Alias gapt Alias-gapt 
 
-Function Alias-gb {git branch}
+Function Alias-gb {git branch $args}
 New-Alias gb Alias-gb 
-Function Alias-gba {git branch -a}
+Function Alias-gba {git branch -a $args}
 New-Alias gba Alias-gba 
-Function Alias-gbd {git branch -d}
-New-Alias gbd Alias-gbd 
+Function Alias-gbd {git branch -d $args}
+New-Alias gbd Alias-gbd
+
+<#
 alias gbda='git branch --no-color --merged | command grep -vE "^([+*]|\s*($(git_main_branch)|$(git_develop_branch))\s*$)" | command xargs git branch -d 2>/dev/null'
-Function Alias-gbD {git branch -D}
-New-Alias gbD Alias-gbD 
-Function Alias-gbl {git blame -b -w}
+#>
+
+<#
+Function Alias-gbD {git branch -D $args}
+New-Alias gbD Alias-gbD
+#>
+
+Function Alias-gbl {git blame -b -w $args}
 New-Alias gbl Alias-gbl 
-Function Alias-gbnm {git branch --no-merged}
+Function Alias-gbnm {git branch --no-merged $args}
 New-Alias gbnm Alias-gbnm 
-Function Alias-gbr {git branch --remote}
+Function Alias-gbr {git branch --remote $args}
 New-Alias gbr Alias-gbr 
-Function Alias-gbs {git bisect}
+Function Alias-gbs {git bisect $args}
 New-Alias gbs Alias-gbs 
-Function Alias-gbsb {git bisect bad}
+Function Alias-gbsb {git bisect bad $args}
 New-Alias gbsb Alias-gbsb 
-Function Alias-gbsg {git bisect good}
+Function Alias-gbsg {git bisect good $args}
 New-Alias gbsg Alias-gbsg 
-Function Alias-gbsr {git bisect reset}
+Function Alias-gbsr {git bisect reset $args}
 New-Alias gbsr Alias-gbsr 
-Function Alias-gbss {git bisect start}
+Function Alias-gbss {git bisect start $args}
 New-Alias gbss Alias-gbss 
 
+<#
 Function Alias-gc {git commit -v}
 New-Alias gc Alias-gc 
+#>
+
+<#
 Function Alias-gc {git commit -v --amend}
-New-Alias gc! Alias-gc 
-Function Alias-gcn {git commit -v --no-edit --amend}
+New-Alias gc! Alias-gc
+#>
+
+Function Alias-gcn {git commit -v --no-edit --amend $args}
 New-Alias gcn! Alias-gcn 
-Function Alias-gca {git commit -v -a}
+Function Alias-gca {git commit -v -a $args}
 New-Alias gca Alias-gca 
-Function Alias-gca {git commit -v -a --amend}
+Function Alias-gca {git commit -v -a --amend $args}
 New-Alias gca! Alias-gca 
-Function Alias-gcan {git commit -v -a --no-edit --amend}
+Function Alias-gcan {git commit -v -a --no-edit --amend $args}
 New-Alias gcan! Alias-gcan 
-Function Alias-gcans {git commit -v -a -s --no-edit --amend}
+Function Alias-gcans {git commit -v -a -s --no-edit --amend $args}
 New-Alias gcans! Alias-gcans 
-Function Alias-gcam {git commit -a -m}
+Function Alias-gcam {git commit -a -m $args}
 New-Alias gcam Alias-gcam 
-Function Alias-gcsm {git commit -s -m}
+Function Alias-gcsm {git commit -s -m $args}
 New-Alias gcsm Alias-gcsm 
-Function Alias-gcas {git commit -a -s}
+Function Alias-gcas {git commit -a -s $args}
 New-Alias gcas Alias-gcas 
-Function Alias-gcasm {git commit -a -s -m}
+Function Alias-gcasm {git commit -a -s -m $args}
 New-Alias gcasm Alias-gcasm 
+
+<#
 Function Alias-gcb {git checkout -b}
 New-Alias gcb Alias-gcb 
-Function Alias-gcf {git config --list}
+#>
+
+Function Alias-gcf {git config --list $args}
 New-Alias gcf Alias-gcf 
 
+<#
 function gccd() {
   command git clone --recurse-submodules "$@"
   [[ -d "$_" ]] && cd "$_" || cd "${${_:t}%.git}"
 }
 compdef _git gccd=git-clone
+#>
 
-Function Alias-gcl {git clone --recurse-submodules}
+Function Alias-gcl {git clone --recurse-submodules $args}
 New-Alias gcl Alias-gcl 
-Function Alias-gclean {git clean -id}
+Function Alias-gclean {git clean -id $args}
 New-Alias gclean Alias-gclean 
+
+<#
 Function Alias-gpristine {git reset --hard && git clean -dffx}
 New-Alias gpristine Alias-gpristine 
+#>
+
+<#
 Function Alias-gcm {git checkout $(git_main_branch)}
-New-Alias gcm Alias-gcm 
-Function Alias-gcd {git checkout $(git_develop_branch)}
+New-Alias gcm Alias-gcm
+#>
+
+Function Alias-gcd {git checkout $(git_develop_branch) $args}
 New-Alias gcd Alias-gcd 
-Function Alias-gcmsg {git commit -m}
+Function Alias-gcmsg {git commit -m $args}
 New-Alias gcmsg Alias-gcmsg 
-Function Alias-gco {git checkout}
+Function Alias-gco {git checkout $args}
 New-Alias gco Alias-gco 
-Function Alias-gcor {git checkout --recurse-submodules}
+Function Alias-gcor {git checkout --recurse-submodules $args}
 New-Alias gcor Alias-gcor 
-Function Alias-gcount {git shortlog -sn}
+Function Alias-gcount {git shortlog -sn $args}
 New-Alias gcount Alias-gcount 
-Function Alias-gcp {git cherry-pick}
+Function Alias-gcp {git cherry-pick $args}
 New-Alias gcp Alias-gcp 
-Function Alias-gcpa {git cherry-pick --abort}
+Function Alias-gcpa {git cherry-pick --abort $args}
 New-Alias gcpa Alias-gcpa 
-Function Alias-gcpc {git cherry-pick --continue}
+Function Alias-gcpc {git cherry-pick --continue $args}
 New-Alias gcpc Alias-gcpc 
+
+<#
 Function Alias-gcs {git commit -S}
 New-Alias gcs Alias-gcs 
-Function Alias-gcss {git commit -S -s}
+#>
+
+Function Alias-gcss {git commit -S -s $args}
 New-Alias gcss Alias-gcss 
-Function Alias-gcssm {git commit -S -s -m}
+Function Alias-gcssm {git commit -S -s -m $args}
 New-Alias gcssm Alias-gcssm 
 
-Function Alias-gd {git diff}
+Function Alias-gd {git diff $args}
 New-Alias gd Alias-gd 
-Function Alias-gdca {git diff --cached}
+Function Alias-gdca {git diff --cached $args}
 New-Alias gdca Alias-gdca 
-Function Alias-gdcw {git diff --cached --word-diff}
+Function Alias-gdcw {git diff --cached --word-diff $args}
 New-Alias gdcw Alias-gdcw 
+
+<#
 Function Alias-gdct {git describe --tags $(git rev-list --tags --max-count=1)}
-New-Alias gdct Alias-gdct 
-Function Alias-gds {git diff --staged}
+New-Alias gdct Alias-gdct
+#>
+
+Function Alias-gds {git diff --staged $args}
 New-Alias gds Alias-gds 
-Function Alias-gdt {git diff-tree --no-commit-id --name-only -r}
+Function Alias-gdt {git diff-tree --no-commit-id --name-only -r $args}
 New-Alias gdt Alias-gdt 
+
+<#
 Function Alias-gdup {git diff @{upstream}}
 New-Alias gdup Alias-gdup 
-Function Alias-gdw {git diff --word-diff}
+#>
+
+Function Alias-gdw {git diff --word-diff $args}
 New-Alias gdw Alias-gdw 
 
+<#
 function gdnolock() {
   git diff "$@" ":(exclude)package-lock.json" ":(exclude)*.lock"
 }
 compdef _git gdnolock=git-diff
+#>
 
+<#
 function gdv() { git diff -w "$@" | view - }
 compdef _git gdv=git-diff
+#>
 
-Function Alias-gf {git fetch}
+Function Alias-gf {git fetch $args}
 New-Alias gf Alias-gf 
 
 # --jobs=<n> was added in git 2.8
+<#
 is-at-least 2.8 "$git_version" \
   && alias gfa='git fetch --all --prune --jobs=10' \
   || alias gfa='git fetch --all --prune'
-Function Alias-gfo {git fetch origin}
+  #>
+
+Function Alias-gfo {git fetch origin $args}
 New-Alias gfo Alias-gfo 
 
+<#
 alias gfg='git ls-files | grep'
+#>
 
-Function Alias-gg {git gui citool}
+Function Alias-gg {git gui citool $args}
 New-Alias gg Alias-gg 
-Function Alias-gga {git gui citool --amend}
+Function Alias-gga {git gui citool --amend $args}
 New-Alias gga Alias-gga 
 
+<#
 function ggf() {
   [[ "$#" != 1 ]] && local b="$(git_current_branch)"
   git push --force origin "${b:=$1}"
 }
 compdef _git ggf=git-checkout
+#>
+
+<#
 function ggfl() {
   [[ "$#" != 1 ]] && local b="$(git_current_branch)"
   git push --force-with-lease origin "${b:=$1}"
 }
 compdef _git ggfl=git-checkout
+#>
 
+<#
 function ggl() {
   if [[ "$#" != 0 ]] && [[ "$#" != 1 ]]; then
     git pull origin "${*}"
@@ -231,7 +299,9 @@ function ggl() {
   fi
 }
 compdef _git ggl=git-checkout
+#>
 
+<#
 function ggp() {
   if [[ "$#" != 0 ]] && [[ "$#" != 1 ]]; then
     git push origin "${*}"
@@ -241,7 +311,9 @@ function ggp() {
   fi
 }
 compdef _git ggp=git-checkout
+#>
 
+<#
 function ggpnp() {
   if [[ "$#" == 0 ]]; then
     ggl && ggp
@@ -250,247 +322,341 @@ function ggpnp() {
   fi
 }
 compdef _git ggpnp=git-checkout
+#>
 
+<#
 function ggu() {
   [[ "$#" != 1 ]] && local b="$(git_current_branch)"
   git pull --rebase origin "${b:=$1}"
 }
 compdef _git ggu=git-checkout
+#>
 
+<#
 Function Alias-ggpur {ggu}
-New-Alias ggpur Alias-ggpur 
+New-Alias ggpur Alias-ggpur
+#>
+
+<#
 Function Alias-ggpull {git pull origin "$(git_current_branch)"}
 New-Alias ggpull Alias-ggpull 
 Function Alias-ggpush {git push origin "$(git_current_branch)"}
 New-Alias ggpush Alias-ggpush 
+#>
 
+<#
 Function Alias-ggsup {git branch --set-upstream-to=origin/$(git_current_branch)}
 New-Alias ggsup Alias-ggsup 
 Function Alias-gpsup {git push --set-upstream origin $(git_current_branch)}
 New-Alias gpsup Alias-gpsup 
+#>
 
-Function Alias-ghh {git help}
+Function Alias-ghh {git help $args}
 New-Alias ghh Alias-ghh 
 
-Function Alias-gignore {git update-index --assume-unchanged}
+Function Alias-gignore {git update-index --assume-unchanged $args}
 New-Alias gignore Alias-gignore 
+
+<#
 Function Alias-gignored {git ls-files -v | grep "^[[:lower:]]"}
 New-Alias gignored Alias-gignored 
+#>
+
+<#
 Function Alias-git-svn-dcommit-push {git svn dcommit && git push github $(git_main_branch):svntrunk}
 New-Alias git-svn-dcommit-push Alias-git-svn-dcommit-push 
+#>
 
+<#
 Function Alias-gk {\gitk --all --branches &!}
 New-Alias gk Alias-gk 
 Function Alias-gke {\gitk --all $(git log -g --pretty=%h) &!}
 New-Alias gke Alias-gke 
+#>
 
+<#
 Function Alias-gl {git pull}
-New-Alias gl Alias-gl 
-Function Alias-glg {git log --stat}
+New-Alias gl Alias-gl
+#>
+
+Function Alias-glg {git log --stat $args}
 New-Alias glg Alias-glg 
-Function Alias-glgp {git log --stat -p}
+Function Alias-glgp {git log --stat -p $args}
 New-Alias glgp Alias-glgp 
-Function Alias-glgg {git log --graph}
+Function Alias-glgg {git log --graph $args}
 New-Alias glgg Alias-glgg 
-Function Alias-glgga {git log --graph --decorate --all}
+Function Alias-glgga {git log --graph --decorate --all $args}
 New-Alias glgga Alias-glgga 
-Function Alias-glgm {git log --graph --max-count=10}
+Function Alias-glgm {git log --graph --max-count=10 $args}
 New-Alias glgm Alias-glgm 
-Function Alias-glo {git log --oneline --decorate}
+Function Alias-glo {git log --oneline --decorate $args}
 New-Alias glo Alias-glo 
-Function Alias-glol {git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset'}
+Function Alias-glol {git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' $args}
 New-Alias glol Alias-glol 
-Function Alias-glols {git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --stat}
+Function Alias-glols {git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --stat $args}
 New-Alias glols Alias-glols 
-Function Alias-glod {git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset'}
+Function Alias-glod {git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset' $args}
 New-Alias glod Alias-glod 
-Function Alias-glods {git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset' --date=short}
+Function Alias-glods {git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset' --date=short $args}
 New-Alias glods Alias-glods 
-Function Alias-glola {git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --all}
+Function Alias-glola {git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --all $args}
 New-Alias glola Alias-glola 
-Function Alias-glog {git log --oneline --decorate --graph}
+Function Alias-glog {git log --oneline --decorate --graph $args}
 New-Alias glog Alias-glog 
-Function Alias-gloga {git log --oneline --decorate --graph --all}
+Function Alias-gloga {git log --oneline --decorate --graph --all $args}
 New-Alias gloga Alias-gloga 
-Function Alias-glp {_git_log_prettily}
+Function Alias-glp {_git_log_prettily $args}
 New-Alias glp Alias-glp 
 
+<#
 Function Alias-gm {git merge}
 New-Alias gm Alias-gm 
+#>
+
+<#
 Function Alias-gmom {git merge origin/$(git_main_branch)}
-New-Alias gmom Alias-gmom 
-Function Alias-gmtl {git mergetool --no-prompt}
+New-Alias gmom Alias-gmom
+#>
+
+Function Alias-gmtl {git mergetool --no-prompt $args}
 New-Alias gmtl Alias-gmtl 
+
+<#
 Function Alias-gmtlvim {git mergetool --no-prompt --tool=vimdiff}
-New-Alias gmtlvim Alias-gmtlvim 
+New-Alias gmtlvim Alias-gmtlvim
+#>
+
+<#
 Function Alias-gmum {git merge upstream/$(git_main_branch)}
-New-Alias gmum Alias-gmum 
-Function Alias-gma {git merge --abort}
+New-Alias gmum Alias-gmum
+#>
+
+Function Alias-gma {git merge --abort $args}
 New-Alias gma Alias-gma 
 
+<#
 Function Alias-gp {git push}
 New-Alias gp Alias-gp 
-Function Alias-gpd {git push --dry-run}
+#>
+
+Function Alias-gpd {git push --dry-run $args}
 New-Alias gpd Alias-gpd 
-Function Alias-gpf {git push --force-with-lease}
+Function Alias-gpf {git push --force-with-lease $args}
 New-Alias gpf Alias-gpf 
-Function Alias-gpf {git push --force}
+Function Alias-gpf {git push --force $args}
 New-Alias gpf! Alias-gpf 
+
+<#
 Function Alias-gpoat {git push origin --all && git push origin --tags}
-New-Alias gpoat Alias-gpoat 
-Function Alias-gpr {git pull --rebase}
+New-Alias gpoat Alias-gpoat
+#>
+
+Function Alias-gpr {git pull --rebase $args}
 New-Alias gpr Alias-gpr 
-Function Alias-gpu {git push upstream}
+Function Alias-gpu {git push upstream $args}
 New-Alias gpu Alias-gpu 
+
+<#
 Function Alias-gpv {git push -v}
 New-Alias gpv Alias-gpv 
+#>
 
-Function Alias-gr {git remote}
+Function Alias-gr {git remote $args}
 New-Alias gr Alias-gr 
-Function Alias-gra {git remote add}
+Function Alias-gra {git remote add $args}
 New-Alias gra Alias-gra 
-Function Alias-grb {git rebase}
+Function Alias-grb {git rebase $args}
 New-Alias grb Alias-grb 
-Function Alias-grba {git rebase --abort}
+Function Alias-grba {git rebase --abort $args}
 New-Alias grba Alias-grba 
-Function Alias-grbc {git rebase --continue}
+Function Alias-grbc {git rebase --continue $args}
 New-Alias grbc Alias-grbc 
+
+<#
 Function Alias-grbd {git rebase $(git_develop_branch)}
-New-Alias grbd Alias-grbd 
-Function Alias-grbi {git rebase -i}
+New-Alias grbd Alias-grbd
+#>
+
+Function Alias-grbi {git rebase -i $args}
 New-Alias grbi Alias-grbi 
+
+<#
 Function Alias-grbm {git rebase $(git_main_branch)}
-New-Alias grbm Alias-grbm 
+New-Alias grbm Alias-grbm
+#>
+
+<#
 Function Alias-grbom {git rebase origin/$(git_main_branch)}
-New-Alias grbom Alias-grbom 
-Function Alias-grbo {git rebase --onto}
+New-Alias grbom Alias-grbom
+#>
+
+Function Alias-grbo {git rebase --onto $args}
 New-Alias grbo Alias-grbo 
-Function Alias-grbs {git rebase --skip}
+Function Alias-grbs {git rebase --skip $args}
 New-Alias grbs Alias-grbs 
-Function Alias-grev {git revert}
+Function Alias-grev {git revert $args}
 New-Alias grev Alias-grev 
-Function Alias-grh {git reset}
+Function Alias-grh {git reset $args}
 New-Alias grh Alias-grh 
-Function Alias-grhh {git reset --hard}
+Function Alias-grhh {git reset --hard $args}
 New-Alias grhh Alias-grhh 
+
+<#
 Function Alias-groh {git reset origin/$(git_current_branch) --hard}
-New-Alias groh Alias-groh 
-Function Alias-grm {git rm}
+New-Alias groh Alias-groh
+#>
+
+Function Alias-grm {git rm $args}
 New-Alias grm Alias-grm 
-Function Alias-grmc {git rm --cached}
+Function Alias-grmc {git rm --cached $args}
 New-Alias grmc Alias-grmc 
-Function Alias-grmv {git remote rename}
+Function Alias-grmv {git remote rename $args}
 New-Alias grmv Alias-grmv 
-Function Alias-grrm {git remote remove}
+Function Alias-grrm {git remote remove $args}
 New-Alias grrm Alias-grrm 
-Function Alias-grs {git restore}
+Function Alias-grs {git restore $args}
 New-Alias grs Alias-grs 
-Function Alias-grset {git remote set-url}
+Function Alias-grset {git remote set-url $args}
 New-Alias grset Alias-grset 
-Function Alias-grss {git restore --source}
+Function Alias-grss {git restore --source $args}
 New-Alias grss Alias-grss 
-Function Alias-grst {git restore --staged}
+Function Alias-grst {git restore --staged $args}
 New-Alias grst Alias-grst 
+
+<#
 Function Alias-grt {cd "$(git rev-parse --show-toplevel || echo .)"}
-New-Alias grt Alias-grt 
-Function Alias-gru {git reset --}
+New-Alias grt Alias-grt
+#>
+
+Function Alias-gru {git reset -- $args}
 New-Alias gru Alias-gru 
-Function Alias-grup {git remote update}
+Function Alias-grup {git remote update $args}
 New-Alias grup Alias-grup 
-Function Alias-grv {git remote -v}
+Function Alias-grv {git remote -v $args}
 New-Alias grv Alias-grv 
 
-Function Alias-gsb {git status -sb}
+Function Alias-gsb {git status -sb $args}
 New-Alias gsb Alias-gsb 
-Function Alias-gsd {git svn dcommit}
+Function Alias-gsd {git svn dcommit $args}
 New-Alias gsd Alias-gsd 
-Function Alias-gsh {git show}
+Function Alias-gsh {git show $args}
 New-Alias gsh Alias-gsh 
-Function Alias-gsi {git submodule init}
+Function Alias-gsi {git submodule init $args}
 New-Alias gsi Alias-gsi 
-Function Alias-gsps {git show --pretty=short --show-signature}
+Function Alias-gsps {git show --pretty=short --show-signature $args}
 New-Alias gsps Alias-gsps 
-Function Alias-gsr {git svn rebase}
+Function Alias-gsr {git svn rebase $args}
 New-Alias gsr Alias-gsr 
-Function Alias-gss {git status -s}
+Function Alias-gss {git status -s $args}
 New-Alias gss Alias-gss 
-Function Alias-gst {git status}
+Function Alias-gst {git status $args}
 New-Alias gst Alias-gst 
 
 # use the default stash push on git 2.13 and newer
+<#
 is-at-least 2.13 "$git_version" \
   && alias gsta='git stash push' \
   || alias gsta='git stash save'
+#>
 
-Function Alias-gstaa {git stash apply}
+Function Alias-gstaa {git stash apply $args}
 New-Alias gstaa Alias-gstaa 
-Function Alias-gstc {git stash clear}
+Function Alias-gstc {git stash clear $args}
 New-Alias gstc Alias-gstc 
-Function Alias-gstd {git stash drop}
+Function Alias-gstd {git stash drop $args}
 New-Alias gstd Alias-gstd 
-Function Alias-gstl {git stash list}
+Function Alias-gstl {git stash list $args}
 New-Alias gstl Alias-gstl 
-Function Alias-gstp {git stash pop}
+Function Alias-gstp {git stash pop $args}
 New-Alias gstp Alias-gstp 
-Function Alias-gsts {git stash show --text}
+Function Alias-gsts {git stash show --text $args}
 New-Alias gsts Alias-gsts 
-Function Alias-gstu {gsta --include-untracked}
+Function Alias-gstu {gsta --include-untracked $args}
 New-Alias gstu Alias-gstu 
-Function Alias-gstall {git stash --all}
+Function Alias-gstall {git stash --all $args}
 New-Alias gstall Alias-gstall 
-Function Alias-gsu {git submodule update}
+Function Alias-gsu {git submodule update $args}
 New-Alias gsu Alias-gsu 
-Function Alias-gsw {git switch}
+Function Alias-gsw {git switch $args}
 New-Alias gsw Alias-gsw 
-Function Alias-gswc {git switch -c}
+Function Alias-gswc {git switch -c $args}
 New-Alias gswc Alias-gswc 
+
+<#
 Function Alias-gswm {git switch $(git_main_branch)}
-New-Alias gswm Alias-gswm 
+New-Alias gswm Alias-gswm
+#>
+
+<# 
 Function Alias-gswd {git switch $(git_develop_branch)}
 New-Alias gswd Alias-gswd 
+#>
 
-Function Alias-gts {git tag -s}
+Function Alias-gts {git tag -s $args}
 New-Alias gts Alias-gts 
+
+<#
 Function Alias-gtv {git tag | sort -V}
-New-Alias gtv Alias-gtv 
+New-Alias gtv Alias-gtv
+#>
+
+<#
 Function Alias-gtl {gtl(){ git tag --sort=-v:refname -n -l "${1}*" }; noglob gtl}
 New-Alias gtl Alias-gtl 
+#>
 
 Function Alias-gunignore {git update-index --no-assume-unchanged}
 New-Alias gunignore Alias-gunignore 
+
+<#
 Function Alias-gunwip {git log -n 1 | grep -q -c "\-\-wip\-\-" && git reset HEAD~1}
-New-Alias gunwip Alias-gunwip 
-Function Alias-gup {git pull --rebase}
+New-Alias gunwip Alias-gunwip
+#>
+
+Function Alias-gup {git pull --rebase $args}
 New-Alias gup Alias-gup 
-Function Alias-gupv {git pull --rebase -v}
+Function Alias-gupv {git pull --rebase -v $args}
 New-Alias gupv Alias-gupv 
-Function Alias-gupa {git pull --rebase --autostash}
+Function Alias-gupa {git pull --rebase --autostash $args}
 New-Alias gupa Alias-gupa 
-Function Alias-gupav {git pull --rebase --autostash -v}
+Function Alias-gupav {git pull --rebase --autostash -v $args}
 New-Alias gupav Alias-gupav 
+
+<#
 Function Alias-gupom {git pull --rebase origin $(git_main_branch)}
-New-Alias gupom Alias-gupom 
+New-Alias gupom Alias-gupom
+#>
+
+<#
 Function Alias-gupomi {git pull --rebase=interactive origin $(git_main_branch)}
-New-Alias gupomi Alias-gupomi 
+New-Alias gupomi Alias-gupomi
+#>
+
+<#
 Function Alias-glum {git pull upstream $(git_main_branch)}
 New-Alias glum Alias-glum 
+#>
 
-Function Alias-gwch {git whatchanged -p --abbrev-commit --pretty=medium}
+Function Alias-gwch {git whatchanged -p --abbrev-commit --pretty=medium $args}
 New-Alias gwch Alias-gwch 
+
+<#
 Function Alias-gwip {git add -A; git rm $(git ls-files --deleted) 2> /dev/null; git commit --no-verify --no-gpg-sign -m "--wip-- [skip ci]"}
 New-Alias gwip Alias-gwip 
+#>
 
-Function Alias-gam {git am}
+Function Alias-gam {git am $args}
 New-Alias gam Alias-gam 
-Function Alias-gamc {git am --continue}
+Function Alias-gamc {git am --continue $args}
 New-Alias gamc Alias-gamc 
-Function Alias-gams {git am --skip}
+Function Alias-gams {git am --skip $args}
 New-Alias gams Alias-gams 
-Function Alias-gama {git am --abort}
+Function Alias-gama {git am --abort $args}
 New-Alias gama Alias-gama 
-Function Alias-gamscp {git am --show-current-patch}
+Function Alias-gamscp {git am --show-current-patch $args}
 New-Alias gamscp Alias-gamscp 
 
+<#
 function grename() {
   if [[ -z "$1" || -z "$2" ]]; then
     echo "Usage: $0 old_branch new_branch"
@@ -504,5 +670,8 @@ function grename() {
     git push --set-upstream origin "$2"
   fi
 }
+#>
 
+<#
 unset git_version
+#>
