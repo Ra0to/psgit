@@ -6,8 +6,17 @@
 # TODO: Rewrite to PowerShell commands
 <#
 autoload -Uz is-at-least
+#>
+
+<#
 git_version="${${(As: :)$(git version 2>/dev/null)}[3]}"
 #>
+$git_version_string = $($(git version) 2>$null)
+# If git is not installed $git_version_string is null and we return empty string.
+# In other case "git version" return string like "git version 2.30.0.windows.2". We find third word and remove windows postfix.
+# If git is not installed returns empty string ("").
+# If git installed returns git version
+$git_version = if ($null -ne $git_version_string) {$($($git_version_string -split " ")[2]) -replace ".windows.(.*)", ""} else {""}
 
 #
 # Functions
@@ -58,6 +67,19 @@ function git_main_branch() {
     fi
   done
   echo master
+}
+#>
+
+# TODO: WIP
+<#
+function git_development_branch() {
+  git rev-parse --git-dir *>>$null
+  if (!$?)
+  {return;}
+  git show-ref -q --verify 'refs/heads/master'
+  if ($?)
+  {return 'master';}
+  return 'fail';
 }
 #>
 
@@ -720,7 +742,7 @@ function grename() {
 }
 #>
 
-# TODO: Rewrite with PowerShell syntax
+# TODO: Rewrite with PowerShell syntax. Clear-Variable -Name git_version
 <#
 unset git_version
 #>
