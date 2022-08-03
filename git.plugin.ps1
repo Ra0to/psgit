@@ -26,13 +26,50 @@ $git_version = if ($null -ne $git_version_string) {$($($git_version_string -spli
 # Back-compatibility wrapper for when this function was defined here in
 # the plugin, before being pulled in to core lib/git.zsh as git_current_branch()
 # to fix the core -> git plugin dependency.
-
-# TODO: Rewrite to PowerShell commands
-<#
 function current_branch() {
-  git_current_branch
+  return $(git_current_branch);
+}
+
+# From: https://github.com/ohmyzsh/ohmyzsh/blob/master/lib/git.zsh
+# Outputs the name of the current branch
+# Usage example: git pull origin $(git_current_branch)
+# Using '--quiet' with 'symbolic-ref' will not cause a fatal error (128) if
+# it's not a symbolic ref, but in a Git repo.
+<#
+function git_current_branch() {
+  local ref
+  ref=$(__git_prompt_git symbolic-ref --quiet HEAD 2> /dev/null)
+  local ret=$?
+  if [[ $ret != 0 ]]; then
+    [[ $ret == 128 ]] && return  # no git repo.
+    ref=$(__git_prompt_git rev-parse --short HEAD 2> /dev/null) || return
+  fi
+  echo ${ref#refs/heads/}
 }
 #>
+function git_current_branch() 
+{
+  git rev-parse --git-dir *>> $null
+  if (!$?)
+  {
+    # Not git repo
+    return;
+  }
+
+  $ref = $(git symbolic-ref --quiet HEAD 2> $null);
+  if (!$?) 
+  {
+    $ref = $(git rev-parse --short HEAD 2> $null);
+    if (!$?) 
+    {
+      return;
+    }
+  }
+
+  $Prefix = 'refs/heads/';
+  $result = if ($ref.StartsWith($Prefix)) {$ref.Substring($Prefix.Length)} else {$ref};
+  return $result;
+}
 
 # TODO: Rewrite to PowerShell commands
 # Pretty log messages
@@ -58,6 +95,7 @@ function git_main_branch() {
   git rev-parse --git-dir *>> $null
   if (!$?)
   {
+    # Not git repo
     return;
   }
 
@@ -80,6 +118,7 @@ function git_develop_branch() {
   git rev-parse --git-dir *>> $null
   if (!$?)
   {
+    # Not git repo
     return;
   }
 
@@ -378,21 +417,14 @@ Function Alias-ggpur {ggu}
 New-Alias ggpur Alias-ggpur
 #>
 
-# TODO: Uncomment when git_current_branch will be implemented. Add args passing to aliases
-<#
-Function Alias-ggpull {git pull origin "$(git_current_branch)"}
+Function Alias-ggpull {git pull origin "$(git_current_branch)" $args}
 New-Alias ggpull Alias-ggpull 
-Function Alias-ggpush {git push origin "$(git_current_branch)"}
-New-Alias ggpush Alias-ggpush 
-#>
-
-# TODO: Uncomment when git_current_branch will be implemented. Add args passing to aliases
-<#
-Function Alias-ggsup {git branch --set-upstream-to=origin/$(git_current_branch)}
+Function Alias-ggpush {git push origin "$(git_current_branch)" $args}
+New-Alias ggpush Alias-ggpush
+Function Alias-ggsup {git branch --set-upstream-to=origin/$(git_current_branch) $args}
 New-Alias ggsup Alias-ggsup 
-Function Alias-gpsup {git push --set-upstream origin $(git_current_branch)}
-New-Alias gpsup Alias-gpsup 
-#>
+Function Alias-gpsup {git push --set-upstream origin $(git_current_branch) $args}
+New-Alias gpsup Alias-gpsup
 
 Function Alias-ghh {git help $args}
 New-Alias ghh Alias-ghh 
@@ -549,11 +581,8 @@ New-Alias grh Alias-grh
 Function Alias-grhh {git reset --hard $args}
 New-Alias grhh Alias-grhh 
 
-# TODO: Uncomment when get_current_branch will be implemented
-<#
 Function Alias-groh {git reset origin/$(git_current_branch) --hard}
 New-Alias groh Alias-groh
-#>
 
 Function Alias-grm {git rm $args}
 New-Alias grm Alias-grm 
