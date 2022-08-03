@@ -756,7 +756,5 @@ function grename() {
 }
 #>
 
-# TODO: Rewrite with PowerShell syntax. Clear-Variable -Name git_version
-<#
-unset git_version
-#>
+Clear-Variable -Name git_version
+Clear-Variable -Name git_version_string
