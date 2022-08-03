@@ -331,7 +331,7 @@ New-Alias gf Alias-gf
 is-at-least 2.8 "$git_version" \
   && alias gfa='git fetch --all --prune --jobs=10' \
   || alias gfa='git fetch --all --prune'
-  #>
+#>
 
 Function Alias-gfo {git fetch origin $args}
 New-Alias gfo Alias-gfo 
@@ -686,11 +686,15 @@ New-Alias gtl Alias-gtl
 Function Alias-gunignore {git update-index --no-assume-unchanged}
 New-Alias gunignore Alias-gunignore 
 
-# TODO: Rewrite with PowerShell syntax
-<#
-Function Alias-gunwip {git log -n 1 | grep -q -c "\-\-wip\-\-" && git reset HEAD~1}
+Function Alias-gunwip
+{
+  $LastCommit = $(git log -n 1 --oneline);
+  if ($LastCommit.Contains("--wip--"))
+  {
+    git reset HEAD~1;
+  }
+}
 New-Alias gunwip Alias-gunwip
-#>
 
 Function Alias-gup {git pull --rebase $args}
 New-Alias gup Alias-gup 
@@ -716,11 +720,13 @@ New-Alias glum Alias-glum
 Function Alias-gwch {git whatchanged -p --abbrev-commit --pretty=medium $args}
 New-Alias gwch Alias-gwch 
 
-# TODO: Rewrite with PowerShell syntax
-<#
-Function Alias-gwip {git add -A; git rm $(git ls-files --deleted) 2> /dev/null; git commit --no-verify --no-gpg-sign -m "--wip-- [skip ci]"}
+Function Alias-gwip 
+{
+  git add -A;
+  git rm $(git ls-files --deleted) 2> $null;
+  git commit --no-verify --no-gpg-sign -m "--wip-- [skip ci]";
+}
 New-Alias gwip Alias-gwip 
-#>
 
 Function Alias-gam {git am $args}
 New-Alias gam Alias-gam 
