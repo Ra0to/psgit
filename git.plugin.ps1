@@ -53,51 +53,48 @@ function work_in_progress() {
 }
 #>
 
-# TODO: Rewrite to PowerShell commands
 # Check if main exists and use instead of master
-
-<#
 function git_main_branch() {
-  command git rev-parse --git-dir &>/dev/null || return
-  local ref
-  for ref in refs/{heads,remotes/{origin,upstream}}/{main,trunk}; do
-    if command git show-ref -q --verify $ref; then
-      echo ${ref:t}
-      return
-    fi
-  done
-  echo master
-}
-#>
-
-# TODO: WIP
-<#
-function git_development_branch() {
-  git rev-parse --git-dir *>>$null
+  git rev-parse --git-dir *>> $null
   if (!$?)
-  {return;}
-  git show-ref -q --verify 'refs/heads/master'
-  if ($?)
-  {return 'master';}
-  return 'fail';
-}
-#>
+  {
+    return;
+  }
 
-# TODO: Rewrite to PowerShell commands
-# Check for develop and similarly named branches
-<#
-function git_develop_branch() {
-  command git rev-parse --git-dir &>/dev/null || return
-  local branch
-  for branch in dev devel development; do
-    if command git show-ref -q --verify refs/heads/$branch; then
-      echo $branch
-      return
-    fi
-  done
-  echo develop
+  foreach ($path in $('heads', 'remotes/origin', 'remotes/upstream')) {
+    foreach ($branch in $('main', 'trunk'))
+    {
+      git show-ref -q --verify "refs/${path}/${branch}"
+      if ($?) 
+      {
+        return $branch;
+      }
+    }
+  }
+
+  return 'master';
 }
-#>
+
+# Check for develop and similarly named branches
+function git_develop_branch() {
+  git rev-parse --git-dir *>> $null
+  if (!$?)
+  {
+    return;
+  }
+
+  foreach ($branch in $('dev', 'devel', 'development'))
+  {
+    git show-ref -q --verify "refs/heads/${branch}"
+    if ($?) 
+    {
+      return $branch;
+    }
+  }
+  
+  return 'develop';
+}
+
 
 #
 # Aliases
@@ -214,9 +211,9 @@ Function Alias-gpristine {git reset --hard && git clean -dffx}
 New-Alias gpristine Alias-gpristine 
 #>
 
-# TODO: Uncomment when git_main_branch function will be implemented
+# TODO: Conflicts with default PowerShell alias gcm -> Get-Command
 <#
-Function Alias-gcm {git checkout $(git_main_branch)}
+Function Alias-gcm {git checkout $(git_main_branch) $args}
 New-Alias gcm Alias-gcm
 #>
 
@@ -409,7 +406,7 @@ Function Alias-gignored {git ls-files -v | grep "^[[:lower:]]"}
 New-Alias gignored Alias-gignored 
 #>
 
-# TODO: Uncomment when git_main_branch will be implemented. And add args passing.
+# TODO: Rewrite to PowerShell syntax (&&). And add args passing.
 <#
 Function Alias-git-svn-dcommit-push {git svn dcommit && git push github $(git_main_branch):svntrunk}
 New-Alias git-svn-dcommit-push Alias-git-svn-dcommit-push 
@@ -464,11 +461,11 @@ Function Alias-gm {git merge}
 New-Alias gm Alias-gm 
 #>
 
-# TODO: Uncomment when git_main_branch will be implemented
-<#
-Function Alias-gmom {git merge origin/$(git_main_branch)}
+Function Alias-gmod {git merge origin/$(git_develop_branch) $args}
+New-Alias gmod Alias-gmod
+
+Function Alias-gmom {git merge origin/$(git_main_branch) $args}
 New-Alias gmom Alias-gmom
-#>
 
 Function Alias-gmtl {git mergetool --no-prompt $args}
 New-Alias gmtl Alias-gmtl 
@@ -476,11 +473,11 @@ New-Alias gmtl Alias-gmtl
 Function Alias-gmtlvim {git mergetool --no-prompt --tool=vimdiff $args}
 New-Alias gmtlvim Alias-gmtlvim
 
-# TODO: Uncomment when git_main_branch will be implemented
-<#
-Function Alias-gmum {git merge upstream/$(git_main_branch)}
+Function Alias-gmud {git merge upstream/$(git_develop_branch) $args}
+New-Alias gmud Alias-gmud
+
+Function Alias-gmum {git merge upstream/$(git_main_branch) $args}
 New-Alias gmum Alias-gmum
-#>
 
 Function Alias-gma {git merge --abort $args}
 New-Alias gma Alias-gma 
@@ -526,26 +523,20 @@ New-Alias grba Alias-grba
 Function Alias-grbc {git rebase --continue $args}
 New-Alias grbc Alias-grbc 
 
-# TODO: Uncomment when get_develop_branch will be implemented
-<#
-Function Alias-grbd {git rebase $(git_develop_branch)}
+Function Alias-grbd {git rebase $(git_develop_branch) $args}
 New-Alias grbd Alias-grbd
-#>
 
 Function Alias-grbi {git rebase -i $args}
 New-Alias grbi Alias-grbi 
 
-# TODO: Uncomment when get_main_branch will be implemented
-<#
 Function Alias-grbm {git rebase $(git_main_branch)}
 New-Alias grbm Alias-grbm
-#>
 
-# TODO: Uncomment when get_main_branch will be implemented
-<#
+Function Alias-grbod {git rebase origin/$(git_develop_branch)}
+New-Alias grbod Alias-grbod
+
 Function Alias-grbom {git rebase origin/$(git_main_branch)}
 New-Alias grbom Alias-grbom
-#>
 
 Function Alias-grbo {git rebase --onto $args}
 New-Alias grbo Alias-grbo 
@@ -642,17 +633,11 @@ New-Alias gsw Alias-gsw
 Function Alias-gswc {git switch -c $args}
 New-Alias gswc Alias-gswc 
 
-# TODO: Uncomment when git_main_branch will be implemented
-<#
-Function Alias-gswm {git switch $(git_main_branch)}
-New-Alias gswm Alias-gswm
-#>
+Function Alias-gswd {git switch $(git_develop_branch) $args}
+New-Alias gswd Alias-gswd
 
-# TODO: Uncomment when git_develop_branch will be implemented
-<# 
-Function Alias-gswd {git switch $(git_develop_branch)}
-New-Alias gswd Alias-gswd 
-#>
+Function Alias-gswm {git switch $(git_main_branch) $args}
+New-Alias gswm Alias-gswm
 
 Function Alias-gts {git tag -s $args}
 New-Alias gts Alias-gts 
@@ -686,24 +671,18 @@ Function Alias-gupa {git pull --rebase --autostash $args}
 New-Alias gupa Alias-gupa 
 Function Alias-gupav {git pull --rebase --autostash -v $args}
 New-Alias gupav Alias-gupav 
-
-# TODO: Uncomment when git_main_branch will be implemented
-<#
-Function Alias-gupom {git pull --rebase origin $(git_main_branch)}
+Function Alias-gupod {git pull --rebase origin $(git_develop_branch) $args}
+New-Alias gupod Alias-gupod
+Function Alias-gupom {git pull --rebase origin $(git_main_branch) $args}
 New-Alias gupom Alias-gupom
-#>
-
-# TODO: Uncomment when git_main_branch will be implemented
-<#
-Function Alias-gupomi {git pull --rebase=interactive origin $(git_main_branch)}
+Function Alias-gupodi {git pull --rebase=interactive origin $(git_develop_branch) $args}
+New-Alias gupodi Alias-gupodi
+Function Alias-gupomi {git pull --rebase=interactive origin $(git_main_branch) $args}
 New-Alias gupomi Alias-gupomi
-#>
-
-# TODO: Uncomment when git_develop_branch will be implemented
-<#
-Function Alias-glum {git pull upstream $(git_main_branch)}
-New-Alias glum Alias-glum 
-#>
+Function Alias-glud {git pull upstream $(git_develop_branch) $args}
+New-Alias glud Alias-glud
+Function Alias-glum {git pull upstream $(git_main_branch) $args}
+New-Alias glum Alias-glum
 
 Function Alias-gwch {git whatchanged -p --abbrev-commit --pretty=medium $args}
 New-Alias gwch Alias-gwch 
