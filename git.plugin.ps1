@@ -317,11 +317,8 @@ New-Alias gds Alias-gds
 Function Alias-gdt {git diff-tree --no-commit-id --name-only -r $args}
 New-Alias gdt Alias-gdt 
 
-# TODO: Find what is happend here
-<#
-Function Alias-gdup {git diff @{upstream}}
-New-Alias gdup Alias-gdup 
-#>
+Function Alias-gdup {git diff '@{upstream}'}
+New-Alias gdup Alias-gdup
 
 Function Alias-gdw {git diff --word-diff $args}
 New-Alias gdw Alias-gdw 
@@ -354,10 +351,12 @@ is-at-least 2.8 "$git_version" \
 Function Alias-gfo {git fetch origin $args}
 New-Alias gfo Alias-gfo 
 
-# TODO: Rewrite to powershell commands
-<#
-alias gfg='git ls-files | grep'
-#>
+Function Alias-gfg
+{
+  #git ls-files | grep
+  git ls-files | Select-String $args
+}
+New-Alias gfg Alias-gfg
 
 Function Alias-gg {git gui citool $args}
 New-Alias gg Alias-gg 
@@ -456,11 +455,18 @@ Function Alias-gignored {git ls-files -v | grep "^[[:lower:]]"}
 New-Alias gignored Alias-gignored 
 #>
 
-# TODO: Rewrite to PowerShell syntax (&&). And add args passing.
-<#
-Function Alias-git-svn-dcommit-push {git svn dcommit && git push github $(git_main_branch):svntrunk}
+Function Alias-git-svn-dcommit-push
+{
+  #git svn dcommit && git push github $(git_main_branch):svntrunk
+  git svn dcommit;
+  if (!$?) 
+  {
+    return;
+  }
+
+  git push github $(git_main_branch):svntrunk;
+}
 New-Alias git-svn-dcommit-push Alias-git-svn-dcommit-push 
-#>
 
 # TODO: Rewrite to powershell syntax
 <#
@@ -556,7 +562,7 @@ New-Alias gpr Alias-gpr
 Function Alias-gpu {git push upstream $args}
 New-Alias gpu Alias-gpu 
 
-# TODO: Conflicts with default PowerShell alias gpt -> Get-ItemPropertyValue
+# TODO: Conflicts with default PowerShell alias gpv -> Get-ItemPropertyValue
 <#
 Function Alias-gpv {git push -v}
 New-Alias gpv Alias-gpv 
@@ -619,11 +625,17 @@ New-Alias grss Alias-grss
 Function Alias-grst {git restore --staged $args}
 New-Alias grst Alias-grst 
 
-# TODO: Rewrite to PowerShell syntax
-<#
-Function Alias-grt {cd "$(git rev-parse --show-toplevel || echo .)"}
+Function Alias-grt
+{
+  $NewPath = $(git rev-parse --show-toplevel);
+  if (!$?)
+  {
+    $NewPath = '.';
+  }
+
+  cd $NewPath;
+}
 New-Alias grt Alias-grt
-#>
 
 Function Alias-gru {git reset -- $args}
 New-Alias gru Alias-gru 
