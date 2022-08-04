@@ -256,11 +256,17 @@ New-Alias gcl Alias-gcl
 Function Alias-gclean {git clean -id $args}
 New-Alias gclean Alias-gclean 
 
-# TODO: Rewrite to PowerShell commands. See: https://stackoverflow.com/questions/2416662/what-are-the-powershell-equivalents-of-bashs-and-operators
-<#
-Function Alias-gpristine {git reset --hard && git clean -dffx}
-New-Alias gpristine Alias-gpristine 
-#>
+Function Alias-gpristine
+{
+  #git reset --hard && git clean -dffx
+  git reset --hard;
+  if (!$?)
+  {
+    return;
+  } 
+  git clean -dffx;
+}
+New-Alias gpristine Alias-gpristine
 
 # TODO: Conflicts with default PowerShell alias gcm -> Get-Command
 <#
