@@ -165,16 +165,28 @@ New-Alias gba Alias-gba
 Function Alias-gbd {git branch -d $args}
 New-Alias gbd Alias-gbd
 
-# TODO: Rewrite with PowerShell commands
-<#
-alias gbda='git branch --no-color --merged | command grep -vE "^([+*]|\s*($(git_main_branch)|$(git_develop_branch))\s*$)" | command xargs git branch -d 2>/dev/null'
-#>
+Function Alias-gdba
+{
+  #alias gbda='git branch --no-color --merged | command grep -vE "^([+*]|\s*($(git_main_branch)|$(git_develop_branch))\s*$)" | command xargs git branch -d 2>/dev/null'
 
-# TODO: conflicts with existing alias gdb
-<#
-Function Alias-gbD {git branch -D $args}
-New-Alias gbD Alias-gbD
-#>
+  $MergedBranches = $(git branch --no-color --merged);
+  foreach ($branch in $MergedBranches) {
+    if ($branch.Contains($(git_main_branch)))
+    {
+      continue;
+    }
+    if ($branch.Contains($(git_develop_branch)))
+    {
+      continue;
+    }
+    git branch -d $branch.Trim() 2> $null;
+  }
+}
+New-Alias gdba Alias-gdba
+
+# Renamed. Original alias is gbD
+Function Alias-gbd! {git branch -D $args}
+New-Alias gbd! Alias-gbd!
 
 Function Alias-gbl {git blame -b -w $args}
 New-Alias gbl Alias-gbl 
