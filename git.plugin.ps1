@@ -8,6 +8,10 @@
 autoload -Uz is-at-least
 #>
 
+param(
+  [switch]$Force
+);
+
 <#
 git_version="${${(As: :)$(git version 2>/dev/null)}[3]}"
 #>
@@ -205,11 +209,11 @@ New-Alias gbsr Alias-gbsr
 Function Alias-gbss {git bisect start $args}
 New-Alias gbss Alias-gbss 
 
-# TODO: Conflicts with PowerShell alias gc -> Get-Content
-<#
-Function Alias-gc {git commit -v}
-New-Alias gc Alias-gc 
-#>
+# Conflicts with PowerShell alias gc -> Get-Content
+Function Alias-gc {git commit -v $args}
+if ($Force) {
+  New-Alias -Force -Option AllScope gc Alias-gc
+}
 
 Function Alias-gc! {git commit -v --amend $args}
 New-Alias gc! Alias-gc!
@@ -233,11 +237,11 @@ New-Alias gcas Alias-gcas
 Function Alias-gcasm {git commit -a -s -m $args}
 New-Alias gcasm Alias-gcasm 
 
-# TODO: Conflicts with PowerShell alias gcb -> Get-Clipboard
-<#
-Function Alias-gcb {git checkout -b}
-New-Alias gcb Alias-gcb 
-#>
+# Conflicts with PowerShell alias gcb -> Get-Clipboard
+Function Alias-gcb {git checkout -b $args}
+if ($Force) {
+  New-Alias -Force gcb Alias-gcb 
+}
 
 Function Alias-gcf {git config --list $args}
 New-Alias gcf Alias-gcf 
@@ -268,11 +272,11 @@ Function Alias-gpristine
 }
 New-Alias gpristine Alias-gpristine
 
-# TODO: Conflicts with default PowerShell alias gcm -> Get-Command
-<#
+# Conflicts with default PowerShell alias gcm -> Get-Command
 Function Alias-gcm {git checkout $(git_main_branch) $args}
-New-Alias gcm Alias-gcm
-#>
+if ($Force) {
+  New-Alias -Force -Option AllScope gcm Alias-gcm
+}
 
 Function Alias-gcd {git checkout $(git_develop_branch) $args}
 New-Alias gcd Alias-gcd 
@@ -291,11 +295,11 @@ New-Alias gcpa Alias-gcpa
 Function Alias-gcpc {git cherry-pick --continue $args}
 New-Alias gcpc Alias-gcpc 
 
-# TODO: Conflicts with default PowerShell alias gcs -> Get-PSCallStack
-<#
-Function Alias-gcs {git commit -S}
-New-Alias gcs Alias-gcs 
-#>
+# Conflicts with default PowerShell alias gcs -> Get-PSCallStack
+Function Alias-gcs {git commit -S $args}
+if ($Force) {
+  New-Alias -Force -Option AllScope gcm Alias-gcs
+}
 
 Function Alias-gcss {git commit -S -s $args}
 New-Alias gcss Alias-gcss 
@@ -482,11 +486,11 @@ Function Alias-gke {
 New-Alias gke Alias-gke 
 
 
-# TODO: Conflicts with default PowerShell alias gl -> Get-Location
-<#
-Function Alias-gl {git pull}
-New-Alias gl Alias-gl
-#>
+# Conflicts with default PowerShell alias gl -> Get-Location
+Function Alias-gl {git pull $args}
+if ($Force) {
+  New-Alias -Force -Option AllScope gcm Alias-gl
+}
 
 Function Alias-glg {git log --stat $args}
 New-Alias glg Alias-glg 
@@ -517,11 +521,11 @@ New-Alias gloga Alias-gloga
 Function Alias-glp {_git_log_prettily $args}
 New-Alias glp Alias-glp 
 
-# TODO: Conflicts with default PowerShell alias gm -> Get-Member
-<#
-Function Alias-gm {git merge}
-New-Alias gm Alias-gm 
-#>
+# Conflicts with default PowerShell alias gm -> Get-Member
+Function Alias-gm {git merge $args}
+if ($Force) {
+  New-Alias -Force -Option AllScope gcm Alias-gm
+}
 
 Function Alias-gmod {git merge origin/$(git_develop_branch) $args}
 New-Alias gmod Alias-gmod
@@ -544,11 +548,11 @@ New-Alias gmum Alias-gmum
 Function Alias-gma {git merge --abort $args}
 New-Alias gma Alias-gma 
 
-# TODO: Conflicts with default PowerShell alias gp -> Get-ItemProperty
-<#
-Function Alias-gp {git push}
-New-Alias gp Alias-gp 
-#>
+# Conflicts with default PowerShell alias gp -> Get-ItemProperty
+Function Alias-gp {git push $args}
+if ($Force) {
+  New-Alias -Force -Option AllScope gcm Alias-gp
+}
 
 Function Alias-gpd {git push --dry-run $args}
 New-Alias gpd Alias-gpd 
@@ -568,11 +572,11 @@ New-Alias gpr Alias-gpr
 Function Alias-gpu {git push upstream $args}
 New-Alias gpu Alias-gpu 
 
-# TODO: Conflicts with default PowerShell alias gpv -> Get-ItemPropertyValue
-<#
-Function Alias-gpv {git push -v}
-New-Alias gpv Alias-gpv 
-#>
+# Conflicts with default PowerShell alias gpv -> Get-ItemPropertyValue
+Function Alias-gpv {git push -v $args}
+if ($Force) {
+  New-Alias -Force -Option AllScope gcm Alias-gpv
+}
 
 Function Alias-gr {git remote $args}
 New-Alias gr Alias-gr 
@@ -667,7 +671,7 @@ New-Alias gss Alias-gss
 Function Alias-gst {git status $args}
 New-Alias gst Alias-gst 
 
-# TODO: Rewrite to PowerShell syntax
+# TODO: Rewrite to PowerShell syntax. When is-at-least will be implemented
 # use the default stash push on git 2.13 and newer
 <#
 is-at-least 2.13 "$git_version" \
