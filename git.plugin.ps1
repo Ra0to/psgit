@@ -340,7 +340,9 @@ compdef _git gdv=git-diff
 Function Alias-gf {git fetch $args}
 New-Alias gf Alias-gf 
 
-# TODO: Rewrite to powershell syntax
+# TODO: Rewrite to powershell syntax. When is-at-least will be implemented
+Function Alias-gfa {git fetch --all --prune --jobs=10}
+New-Alias gfa Alias-gfa
 # --jobs=<n> was added in git 2.8
 <#
 is-at-least 2.8 "$git_version" \
@@ -449,11 +451,11 @@ New-Alias ghh Alias-ghh
 Function Alias-gignore {git update-index --assume-unchanged $args}
 New-Alias gignore Alias-gignore 
 
-# TODO: Rewrite to PowerShell syntax
-<#
-Function Alias-gignored {git ls-files -v | grep "^[[:lower:]]"}
+Function Alias-gignored {
+  # git ls-files -v | grep "^[[:lower:]]"
+  git ls-files -v | Select-String -CaseSensitive '^[a-z]'
+}
 New-Alias gignored Alias-gignored 
-#>
 
 Function Alias-git-svn-dcommit-push
 {
@@ -468,13 +470,17 @@ Function Alias-git-svn-dcommit-push
 }
 New-Alias git-svn-dcommit-push Alias-git-svn-dcommit-push 
 
-# TODO: Rewrite to powershell syntax
-<#
-Function Alias-gk {\gitk --all --branches &!}
+Function Alias-gk {
+  #\gitk --all --branches &!
+  gitk --all --branches
+}
 New-Alias gk Alias-gk 
-Function Alias-gke {\gitk --all $(git log -g --pretty=%h) &!}
+Function Alias-gke {
+  #\gitk --all $(git log -g --pretty=%h) &!
+  gitk --all $(git log -g --pretty=%h) 
+}
 New-Alias gke Alias-gke 
-#>
+
 
 # TODO: Conflicts with default PowerShell alias gl -> Get-Location
 <#
