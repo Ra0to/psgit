@@ -561,11 +561,14 @@ New-Alias gpf Alias-gpf
 Function Alias-gpf {git push --force $args}
 New-Alias gpf! Alias-gpf 
 
-# TODO: Rewrite to PowerShell syntax
-<#
-Function Alias-gpoat {git push origin --all && git push origin --tags}
+Function Alias-gpoat {
+  git push origin --all;
+  if (!$?) {
+    return;
+  }
+  git push origin --tags
+}
 New-Alias gpoat Alias-gpoat
-#>
 
 Function Alias-gpr {git pull --rebase $args}
 New-Alias gpr Alias-gpr 
