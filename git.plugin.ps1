@@ -345,7 +345,7 @@ Function Alias-gf {git fetch $args}
 New-Alias gf Alias-gf 
 
 # TODO: Rewrite to powershell syntax. When is-at-least will be implemented
-Function Alias-gfa {git fetch --all --prune --jobs=10}
+Function Alias-gfa {git fetch --all --prune --jobs=10 $args}
 New-Alias gfa Alias-gfa
 # --jobs=<n> was added in git 2.8
 <#
@@ -676,6 +676,8 @@ New-Alias gst Alias-gst
 
 # TODO: Rewrite to PowerShell syntax. When is-at-least will be implemented
 # use the default stash push on git 2.13 and newer
+Function Alia-gsta {git stash push $args}
+New-Alias gsta Alias-gsta
 <#
 is-at-least 2.13 "$git_version" \
   && alias gsta='git stash push' \
