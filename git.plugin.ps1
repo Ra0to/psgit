@@ -489,7 +489,7 @@ New-Alias gke Alias-gke
 # Conflicts with default PowerShell alias gl -> Get-Location
 Function Alias-gl {git pull $args}
 if ($Force) {
-  New-Alias -Force -Option AllScope gcm Alias-gl
+  New-Alias -Force -Option AllScope gl Alias-gl
 }
 
 Function Alias-glg {git log --stat $args}
