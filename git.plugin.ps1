@@ -238,9 +238,10 @@ Function Alias-gcasm {git commit -a -s -m $args}
 New-Alias gcasm Alias-gcasm 
 
 # Conflicts with PowerShell alias gcb -> Get-Clipboard
+# TODO: Throw error when try to remove this alias.
 Function Alias-gcb {git checkout -b $args}
 if ($Force) {
-  New-Alias -Force gcb Alias-gcb 
+  # New-Alias -Force -Option AllScope -ErrorAction SilentlyContinue gcb Alias-gcb
 }
 
 Function Alias-gcf {git config --list $args}
@@ -298,7 +299,7 @@ New-Alias gcpc Alias-gcpc
 # Conflicts with default PowerShell alias gcs -> Get-PSCallStack
 Function Alias-gcs {git commit -S $args}
 if ($Force) {
-  New-Alias -Force -Option AllScope gcm Alias-gcs
+  New-Alias -Force -Option AllScope gcs Alias-gcs
 }
 
 Function Alias-gcss {git commit -S -s $args}
@@ -524,7 +525,7 @@ New-Alias glp Alias-glp
 # Conflicts with default PowerShell alias gm -> Get-Member
 Function Alias-gm {git merge $args}
 if ($Force) {
-  New-Alias -Force -Option AllScope gcm Alias-gm
+  New-Alias -Force -Option AllScope gm Alias-gm
 }
 
 Function Alias-gmod {git merge origin/$(git_develop_branch) $args}
@@ -551,7 +552,7 @@ New-Alias gma Alias-gma
 # Conflicts with default PowerShell alias gp -> Get-ItemProperty
 Function Alias-gp {git push $args}
 if ($Force) {
-  New-Alias -Force -Option AllScope gcm Alias-gp
+  New-Alias -Force -Option AllScope gp Alias-gp
 }
 
 Function Alias-gpd {git push --dry-run $args}
@@ -578,7 +579,7 @@ New-Alias gpu Alias-gpu
 # Conflicts with default PowerShell alias gpv -> Get-ItemPropertyValue
 Function Alias-gpv {git push -v $args}
 if ($Force) {
-  New-Alias -Force -Option AllScope gcm Alias-gpv
+  New-Alias -Force -Option AllScope gpv Alias-gpv
 }
 
 Function Alias-gr {git remote $args}
