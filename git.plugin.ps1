@@ -261,6 +261,12 @@ New-Alias gcl Alias-gcl
 Function Alias-gclean {git clean -id $args}
 New-Alias gclean Alias-gclean 
 
+Function Alias-gdiscard {
+  git clean -fd;
+  git restore .;
+}
+New-Alias gdiscard Alias-gdiscard
+
 Function Alias-gpristine
 {
   #git reset --hard && git clean -dffx
