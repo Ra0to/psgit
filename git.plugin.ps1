@@ -145,29 +145,31 @@ function git_develop_branch() {
 #
 
 Function Alias-g {git $args}
-New-Alias g Alias-g
+New-Alias -ErrorAction SilentlyContinue -Name g -Value Alias-g
+# New-Alias -ErrorAction SilentlyContinue -Name gcb -Value Alias-gcb
+
 
 Function Alias-ga {git add $args}
-New-Alias ga Alias-ga 
+New-Alias -ErrorAction SilentlyContinue -Name ga -Value Alias-ga 
 Function Alias-gaa {git add --all $args}
-New-Alias gaa Alias-gaa 
+New-Alias -ErrorAction SilentlyContinue -Name gaa -Value Alias-gaa 
 Function Alias-gapa {git add --patch $args}
-New-Alias gapa Alias-gapa 
+New-Alias -ErrorAction SilentlyContinue -Name gapa -Value Alias-gapa 
 Function Alias-gau {git add --update $args}
-New-Alias gau Alias-gau 
+New-Alias -ErrorAction SilentlyContinue -Name gau -Value Alias-gau 
 Function Alias-gav {git add --verbose $args}
-New-Alias gav Alias-gav 
+New-Alias -ErrorAction SilentlyContinue -Name gav -Value Alias-gav 
 Function Alias-gap {git apply $args}
-New-Alias gap Alias-gap 
+New-Alias -ErrorAction SilentlyContinue -Name gap -Value Alias-gap 
 Function Alias-gapt {git apply --3way $args}
-New-Alias gapt Alias-gapt 
+New-Alias -ErrorAction SilentlyContinue -Name gapt -Value Alias-gapt 
 
 Function Alias-gb {git branch $args}
-New-Alias gb Alias-gb 
+New-Alias -ErrorAction SilentlyContinue -Name gb -Value Alias-gb 
 Function Alias-gba {git branch -a $args}
-New-Alias gba Alias-gba 
+New-Alias -ErrorAction SilentlyContinue -Name gba -Value Alias-gba 
 Function Alias-gbd {git branch -d $args}
-New-Alias gbd Alias-gbd
+New-Alias -ErrorAction SilentlyContinue -Name gbd -Value Alias-gbd
 
 Function Alias-gdba
 {
@@ -186,28 +188,28 @@ Function Alias-gdba
     git branch -d $branch.Trim() 2> $null;
   }
 }
-New-Alias gdba Alias-gdba
+New-Alias -ErrorAction SilentlyContinue -Name gdba -Value Alias-gdba
 
 # Renamed. Original alias is gbD
 Function Alias-gbd! {git branch -D $args}
-New-Alias gbd! Alias-gbd!
+New-Alias -ErrorAction SilentlyContinue -Name gbd! -Value Alias-gbd!
 
 Function Alias-gbl {git blame -b -w $args}
-New-Alias gbl Alias-gbl 
+New-Alias -ErrorAction SilentlyContinue -Name gbl -Value Alias-gbl 
 Function Alias-gbnm {git branch --no-merged $args}
-New-Alias gbnm Alias-gbnm 
+New-Alias -ErrorAction SilentlyContinue -Name gbnm -Value Alias-gbnm 
 Function Alias-gbr {git branch --remote $args}
-New-Alias gbr Alias-gbr 
+New-Alias -ErrorAction SilentlyContinue -Name gbr -Value Alias-gbr 
 Function Alias-gbs {git bisect $args}
-New-Alias gbs Alias-gbs 
+New-Alias -ErrorAction SilentlyContinue -Name gbs -Value Alias-gbs 
 Function Alias-gbsb {git bisect bad $args}
-New-Alias gbsb Alias-gbsb 
+New-Alias -ErrorAction SilentlyContinue -Name gbsb -Value Alias-gbsb 
 Function Alias-gbsg {git bisect good $args}
-New-Alias gbsg Alias-gbsg 
+New-Alias -ErrorAction SilentlyContinue -Name gbsg -Value Alias-gbsg 
 Function Alias-gbsr {git bisect reset $args}
-New-Alias gbsr Alias-gbsr 
+New-Alias -ErrorAction SilentlyContinue -Name gbsr -Value Alias-gbsr 
 Function Alias-gbss {git bisect start $args}
-New-Alias gbss Alias-gbss 
+New-Alias -ErrorAction SilentlyContinue -Name gbss -Value Alias-gbss 
 
 # Conflicts with PowerShell alias gc -> Get-Content
 Function Alias-gc {git commit -v $args}
@@ -216,26 +218,26 @@ if ($Force) {
 }
 
 Function Alias-gc! {git commit -v --amend $args}
-New-Alias gc! Alias-gc!
+New-Alias -ErrorAction SilentlyContinue -Name gc! -Value Alias-gc!
 
 Function Alias-gcn {git commit -v --no-edit --amend $args}
-New-Alias gcn! Alias-gcn 
+New-Alias -ErrorAction SilentlyContinue -Name gcn! -Value Alias-gcn 
 Function Alias-gca {git commit -v -a $args}
-New-Alias gca Alias-gca 
-Function Alias-gca {git commit -v -a --amend $args}
-New-Alias gca! Alias-gca 
+New-Alias -ErrorAction SilentlyContinue -Name gca -Value Alias-gca
+Function Alias-gca! {git commit -v -a --amend $args}
+New-Alias -ErrorAction SilentlyContinue -Name gca! -Value Alias-gca!
 Function Alias-gcan {git commit -v -a --no-edit --amend $args}
-New-Alias gcan! Alias-gcan 
+New-Alias -ErrorAction SilentlyContinue -Name gcan -Value Alias-gcan 
 Function Alias-gcans {git commit -v -a -s --no-edit --amend $args}
-New-Alias gcans! Alias-gcans 
+New-Alias -ErrorAction SilentlyContinue -Name gcans -Value Alias-gcans 
 Function Alias-gcam {git commit -a -m $args}
-New-Alias gcam Alias-gcam 
+New-Alias -ErrorAction SilentlyContinue -Name gcam -Value Alias-gcam 
 Function Alias-gcsm {git commit -s -m $args}
-New-Alias gcsm Alias-gcsm 
+New-Alias -ErrorAction SilentlyContinue -Name gcsm -Value Alias-gcsm 
 Function Alias-gcas {git commit -a -s $args}
-New-Alias gcas Alias-gcas 
+New-Alias -ErrorAction SilentlyContinue -Name gcas -Value Alias-gcas 
 Function Alias-gcasm {git commit -a -s -m $args}
-New-Alias gcasm Alias-gcasm 
+New-Alias -ErrorAction SilentlyContinue -Name gcasm -Value Alias-gcasm 
 
 # Conflicts with PowerShell alias gcb -> Get-Clipboard
 # TODO: Throw error when try to remove this alias.
@@ -245,7 +247,7 @@ if ($Force) {
 }
 
 Function Alias-gcf {git config --list $args}
-New-Alias gcf Alias-gcf 
+New-Alias -ErrorAction SilentlyContinue -Name gcf -Value Alias-gcf 
 
 # TODO: Rewrite to PowerShell commands
 <#
@@ -257,15 +259,15 @@ compdef _git gccd=git-clone
 #>
 
 Function Alias-gcl {git clone --recurse-submodules $args}
-New-Alias gcl Alias-gcl 
+New-Alias -ErrorAction SilentlyContinue -Name gcl -Value Alias-gcl 
 Function Alias-gclean {git clean -id $args}
-New-Alias gclean Alias-gclean 
+New-Alias -ErrorAction SilentlyContinue -Name gclean -Value Alias-gclean 
 
 Function Alias-gdiscard {
   git clean -fd;
   git restore .;
 }
-New-Alias gdiscard Alias-gdiscard
+New-Alias -ErrorAction SilentlyContinue -Name gdiscard -Value Alias-gdiscard
 
 Function Alias-gpristine
 {
@@ -277,7 +279,7 @@ Function Alias-gpristine
   } 
   git clean -dffx;
 }
-New-Alias gpristine Alias-gpristine
+New-Alias -ErrorAction SilentlyContinue -Name gpristine -Value Alias-gpristine
 
 # Conflicts with default PowerShell alias gcm -> Get-Command
 Function Alias-gcm {git checkout $(git_main_branch) $args}
@@ -286,21 +288,21 @@ if ($Force) {
 }
 
 Function Alias-gcd {git checkout $(git_develop_branch) $args}
-New-Alias gcd Alias-gcd 
+New-Alias -ErrorAction SilentlyContinue -Name gcd -Value Alias-gcd 
 Function Alias-gcmsg {git commit -m $args}
-New-Alias gcmsg Alias-gcmsg 
+New-Alias -ErrorAction SilentlyContinue -Name gcmsg -Value Alias-gcmsg 
 Function Alias-gco {git checkout $args}
-New-Alias gco Alias-gco 
+New-Alias -ErrorAction SilentlyContinue -Name gco -Value Alias-gco 
 Function Alias-gcor {git checkout --recurse-submodules $args}
-New-Alias gcor Alias-gcor 
+New-Alias -ErrorAction SilentlyContinue -Name gcor -Value Alias-gcor 
 Function Alias-gcount {git shortlog -sn $args}
-New-Alias gcount Alias-gcount 
+New-Alias -ErrorAction SilentlyContinue -Name gcount -Value Alias-gcount 
 Function Alias-gcp {git cherry-pick $args}
-New-Alias gcp Alias-gcp 
+New-Alias -ErrorAction SilentlyContinue -Name gcp -Value Alias-gcp 
 Function Alias-gcpa {git cherry-pick --abort $args}
-New-Alias gcpa Alias-gcpa 
+New-Alias -ErrorAction SilentlyContinue -Name gcpa -Value Alias-gcpa 
 Function Alias-gcpc {git cherry-pick --continue $args}
-New-Alias gcpc Alias-gcpc 
+New-Alias -ErrorAction SilentlyContinue -Name gcpc -Value Alias-gcpc 
 
 # Conflicts with default PowerShell alias gcs -> Get-PSCallStack
 Function Alias-gcs {git commit -S $args}
@@ -309,30 +311,30 @@ if ($Force) {
 }
 
 Function Alias-gcss {git commit -S -s $args}
-New-Alias gcss Alias-gcss 
+New-Alias -ErrorAction SilentlyContinue -Name gcss -Value Alias-gcss 
 Function Alias-gcssm {git commit -S -s -m $args}
-New-Alias gcssm Alias-gcssm 
+New-Alias -ErrorAction SilentlyContinue -Name gcssm -Value Alias-gcssm 
 
 Function Alias-gd {git diff $args}
-New-Alias gd Alias-gd 
+New-Alias -ErrorAction SilentlyContinue -Name gd -Value Alias-gd 
 Function Alias-gdca {git diff --cached $args}
-New-Alias gdca Alias-gdca 
+New-Alias -ErrorAction SilentlyContinue -Name gdca -Value Alias-gdca 
 Function Alias-gdcw {git diff --cached --word-diff $args}
-New-Alias gdcw Alias-gdcw 
+New-Alias -ErrorAction SilentlyContinue -Name gdcw -Value Alias-gdcw 
 
 Function Alias-gdct {git describe --tags $(git rev-list --tags --max-count=1)}
-New-Alias gdct Alias-gdct
+New-Alias -ErrorAction SilentlyContinue -Name gdct -Value Alias-gdct
 
 Function Alias-gds {git diff --staged $args}
-New-Alias gds Alias-gds 
+New-Alias -ErrorAction SilentlyContinue -Name gds -Value Alias-gds 
 Function Alias-gdt {git diff-tree --no-commit-id --name-only -r $args}
-New-Alias gdt Alias-gdt 
+New-Alias -ErrorAction SilentlyContinue -Name gdt -Value Alias-gdt 
 
 Function Alias-gdup {git diff '@{upstream}'}
-New-Alias gdup Alias-gdup
+New-Alias -ErrorAction SilentlyContinue -Name gdup -Value Alias-gdup
 
 Function Alias-gdw {git diff --word-diff $args}
-New-Alias gdw Alias-gdw 
+New-Alias -ErrorAction SilentlyContinue -Name gdw -Value Alias-gdw 
 
 # TODO: Rewrite to powershell syntax
 <#
@@ -349,11 +351,11 @@ compdef _git gdv=git-diff
 #>
 
 Function Alias-gf {git fetch $args}
-New-Alias gf Alias-gf 
+New-Alias -ErrorAction SilentlyContinue -Name gf -Value Alias-gf 
 
 # TODO: Rewrite to powershell syntax. When is-at-least will be implemented
 Function Alias-gfa {git fetch --all --prune --jobs=10 $args}
-New-Alias gfa Alias-gfa
+New-Alias -ErrorAction SilentlyContinue -Name gfa -Value Alias-gfa
 # --jobs=<n> was added in git 2.8
 <#
 is-at-least 2.8 "$git_version" \
@@ -362,19 +364,19 @@ is-at-least 2.8 "$git_version" \
 #>
 
 Function Alias-gfo {git fetch origin $args}
-New-Alias gfo Alias-gfo 
+New-Alias -ErrorAction SilentlyContinue -Name gfo -Value Alias-gfo 
 
 Function Alias-gfg
 {
   #git ls-files | grep
   git ls-files | Select-String $args
 }
-New-Alias gfg Alias-gfg
+New-Alias -ErrorAction SilentlyContinue -Name gfg -Value Alias-gfg
 
 Function Alias-gg {git gui citool $args}
-New-Alias gg Alias-gg 
+New-Alias -ErrorAction SilentlyContinue -Name gg -Value Alias-gg 
 Function Alias-gga {git gui citool --amend $args}
-New-Alias gga Alias-gga 
+New-Alias -ErrorAction SilentlyContinue -Name gga -Value Alias-gga 
 
 # TODO: Rewrite to powershell syntax
 <#
@@ -444,29 +446,29 @@ compdef _git ggu=git-checkout
 # TODO: Uncomment when ggu function will be implemeted. Add args passing to aliases
 <#
 Function Alias-ggpur {ggu}
-New-Alias ggpur Alias-ggpur
+New-Alias -ErrorAction SilentlyContinue -Name ggpur -Value Alias-ggpur
 #>
 
 Function Alias-ggpull {git pull origin "$(git_current_branch)" $args}
-New-Alias ggpull Alias-ggpull 
+New-Alias -ErrorAction SilentlyContinue -Name ggpull -Value Alias-ggpull 
 Function Alias-ggpush {git push origin "$(git_current_branch)" $args}
-New-Alias ggpush Alias-ggpush
+New-Alias -ErrorAction SilentlyContinue -Name ggpush -Value Alias-ggpush
 Function Alias-ggsup {git branch --set-upstream-to=origin/$(git_current_branch) $args}
-New-Alias ggsup Alias-ggsup 
+New-Alias -ErrorAction SilentlyContinue -Name ggsup -Value Alias-ggsup 
 Function Alias-gpsup {git push --set-upstream origin $(git_current_branch) $args}
-New-Alias gpsup Alias-gpsup
+New-Alias -ErrorAction SilentlyContinue -Name gpsup -Value Alias-gpsup
 
 Function Alias-ghh {git help $args}
-New-Alias ghh Alias-ghh 
+New-Alias -ErrorAction SilentlyContinue -Name ghh -Value Alias-ghh 
 
 Function Alias-gignore {git update-index --assume-unchanged $args}
-New-Alias gignore Alias-gignore 
+New-Alias -ErrorAction SilentlyContinue -Name gignore -Value Alias-gignore 
 
 Function Alias-gignored {
   # git ls-files -v | grep "^[[:lower:]]"
   git ls-files -v | Select-String -CaseSensitive '^[a-z]'
 }
-New-Alias gignored Alias-gignored 
+New-Alias -ErrorAction SilentlyContinue -Name gignored -Value Alias-gignored 
 
 Function Alias-git-svn-dcommit-push
 {
@@ -479,18 +481,18 @@ Function Alias-git-svn-dcommit-push
 
   git push github $(git_main_branch):svntrunk;
 }
-New-Alias git-svn-dcommit-push Alias-git-svn-dcommit-push 
+New-Alias -ErrorAction SilentlyContinue -Name git-svn-dcommit-push -Value Alias-git-svn-dcommit-push 
 
 Function Alias-gk {
   #\gitk --all --branches &!
   gitk --all --branches
 }
-New-Alias gk Alias-gk 
+New-Alias -ErrorAction SilentlyContinue -Name gk -Value Alias-gk 
 Function Alias-gke {
   #\gitk --all $(git log -g --pretty=%h) &!
   gitk --all $(git log -g --pretty=%h) 
 }
-New-Alias gke Alias-gke 
+New-Alias -ErrorAction SilentlyContinue -Name gke -Value Alias-gke 
 
 
 # Conflicts with default PowerShell alias gl -> Get-Location
@@ -500,33 +502,33 @@ if ($Force) {
 }
 
 Function Alias-glg {git log --stat $args}
-New-Alias glg Alias-glg 
+New-Alias -ErrorAction SilentlyContinue -Name glg -Value Alias-glg 
 Function Alias-glgp {git log --stat -p $args}
-New-Alias glgp Alias-glgp 
+New-Alias -ErrorAction SilentlyContinue -Name glgp -Value Alias-glgp 
 Function Alias-glgg {git log --graph $args}
-New-Alias glgg Alias-glgg 
+New-Alias -ErrorAction SilentlyContinue -Name glgg -Value Alias-glgg 
 Function Alias-glgga {git log --graph --decorate --all $args}
-New-Alias glgga Alias-glgga 
+New-Alias -ErrorAction SilentlyContinue -Name glgga -Value Alias-glgga 
 Function Alias-glgm {git log --graph --max-count=10 $args}
-New-Alias glgm Alias-glgm 
+New-Alias -ErrorAction SilentlyContinue -Name glgm -Value Alias-glgm 
 Function Alias-glo {git log --oneline --decorate $args}
-New-Alias glo Alias-glo 
+New-Alias -ErrorAction SilentlyContinue -Name glo -Value Alias-glo 
 Function Alias-glol {git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' $args}
-New-Alias glol Alias-glol 
+New-Alias -ErrorAction SilentlyContinue -Name glol -Value Alias-glol 
 Function Alias-glols {git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --stat $args}
-New-Alias glols Alias-glols 
+New-Alias -ErrorAction SilentlyContinue -Name glols -Value Alias-glols 
 Function Alias-glod {git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset' $args}
-New-Alias glod Alias-glod 
+New-Alias -ErrorAction SilentlyContinue -Name glod -Value Alias-glod 
 Function Alias-glods {git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset' --date=short $args}
-New-Alias glods Alias-glods 
+New-Alias -ErrorAction SilentlyContinue -Name glods -Value Alias-glods 
 Function Alias-glola {git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --all $args}
-New-Alias glola Alias-glola 
+New-Alias -ErrorAction SilentlyContinue -Name glola -Value Alias-glola 
 Function Alias-glog {git log --oneline --decorate --graph $args}
-New-Alias glog Alias-glog 
+New-Alias -ErrorAction SilentlyContinue -Name glog -Value Alias-glog 
 Function Alias-gloga {git log --oneline --decorate --graph --all $args}
-New-Alias gloga Alias-gloga 
+New-Alias -ErrorAction SilentlyContinue -Name gloga -Value Alias-gloga 
 Function Alias-glp {_git_log_prettily $args}
-New-Alias glp Alias-glp 
+New-Alias -ErrorAction SilentlyContinue -Name glp -Value Alias-glp 
 
 # Conflicts with default PowerShell alias gm -> Get-Member
 Function Alias-gm {git merge $args}
@@ -535,25 +537,25 @@ if ($Force) {
 }
 
 Function Alias-gmod {git merge origin/$(git_develop_branch) $args}
-New-Alias gmod Alias-gmod
+New-Alias -ErrorAction SilentlyContinue -Name gmod -Value Alias-gmod
 
 Function Alias-gmom {git merge origin/$(git_main_branch) $args}
-New-Alias gmom Alias-gmom
+New-Alias -ErrorAction SilentlyContinue -Name gmom -Value Alias-gmom
 
 Function Alias-gmtl {git mergetool --no-prompt $args}
-New-Alias gmtl Alias-gmtl 
+New-Alias -ErrorAction SilentlyContinue -Name gmtl -Value Alias-gmtl 
 
 Function Alias-gmtlvim {git mergetool --no-prompt --tool=vimdiff $args}
-New-Alias gmtlvim Alias-gmtlvim
+New-Alias -ErrorAction SilentlyContinue -Name gmtlvim -Value Alias-gmtlvim
 
 Function Alias-gmud {git merge upstream/$(git_develop_branch) $args}
-New-Alias gmud Alias-gmud
+New-Alias -ErrorAction SilentlyContinue -Name gmud -Value Alias-gmud
 
 Function Alias-gmum {git merge upstream/$(git_main_branch) $args}
-New-Alias gmum Alias-gmum
+New-Alias -ErrorAction SilentlyContinue -Name gmum -Value Alias-gmum
 
 Function Alias-gma {git merge --abort $args}
-New-Alias gma Alias-gma 
+New-Alias -ErrorAction SilentlyContinue -Name gma -Value Alias-gma 
 
 # Conflicts with default PowerShell alias gp -> Get-ItemProperty
 Function Alias-gp {git push $args}
@@ -562,11 +564,11 @@ if ($Force) {
 }
 
 Function Alias-gpd {git push --dry-run $args}
-New-Alias gpd Alias-gpd 
+New-Alias -ErrorAction SilentlyContinue -Name gpd -Value Alias-gpd 
 Function Alias-gpf {git push --force-with-lease $args}
-New-Alias gpf Alias-gpf 
-Function Alias-gpf {git push --force $args}
-New-Alias gpf! Alias-gpf 
+New-Alias -ErrorAction SilentlyContinue -Name gpf -Value Alias-gpf 
+Function Alias-gpf! {git push --force $args}
+New-Alias -ErrorAction SilentlyContinue -Name gpf! -Value Alias-gpf!
 
 Function Alias-gpoat {
   git push origin --all;
@@ -575,12 +577,12 @@ Function Alias-gpoat {
   }
   git push origin --tags
 }
-New-Alias gpoat Alias-gpoat
+New-Alias -ErrorAction SilentlyContinue -Name gpoat -Value Alias-gpoat
 
 Function Alias-gpr {git pull --rebase $args}
-New-Alias gpr Alias-gpr 
+New-Alias -ErrorAction SilentlyContinue -Name gpr -Value Alias-gpr 
 Function Alias-gpu {git push upstream $args}
-New-Alias gpu Alias-gpu 
+New-Alias -ErrorAction SilentlyContinue -Name gpu -Value Alias-gpu 
 
 # Conflicts with default PowerShell alias gpv -> Get-ItemPropertyValue
 Function Alias-gpv {git push -v $args}
@@ -589,61 +591,61 @@ if ($Force) {
 }
 
 Function Alias-gr {git remote $args}
-New-Alias gr Alias-gr 
+New-Alias -ErrorAction SilentlyContinue -Name gr -Value Alias-gr 
 Function Alias-gra {git remote add $args}
-New-Alias gra Alias-gra 
+New-Alias -ErrorAction SilentlyContinue -Name gra -Value Alias-gra 
 Function Alias-grb {git rebase $args}
-New-Alias grb Alias-grb 
+New-Alias -ErrorAction SilentlyContinue -Name grb -Value Alias-grb 
 Function Alias-grba {git rebase --abort $args}
-New-Alias grba Alias-grba 
+New-Alias -ErrorAction SilentlyContinue -Name grba -Value Alias-grba 
 Function Alias-grbc {git rebase --continue $args}
-New-Alias grbc Alias-grbc 
+New-Alias -ErrorAction SilentlyContinue -Name grbc -Value Alias-grbc 
 
 Function Alias-grbd {git rebase $(git_develop_branch) $args}
-New-Alias grbd Alias-grbd
+New-Alias -ErrorAction SilentlyContinue -Name grbd -Value Alias-grbd
 
 Function Alias-grbi {git rebase -i $args}
-New-Alias grbi Alias-grbi 
+New-Alias -ErrorAction SilentlyContinue -Name grbi -Value Alias-grbi 
 
 Function Alias-grbm {git rebase $(git_main_branch)}
-New-Alias grbm Alias-grbm
+New-Alias -ErrorAction SilentlyContinue -Name grbm -Value Alias-grbm
 
 Function Alias-grbod {git rebase origin/$(git_develop_branch)}
-New-Alias grbod Alias-grbod
+New-Alias -ErrorAction SilentlyContinue -Name grbod -Value Alias-grbod
 
 Function Alias-grbom {git rebase origin/$(git_main_branch)}
-New-Alias grbom Alias-grbom
+New-Alias -ErrorAction SilentlyContinue -Name grbom -Value Alias-grbom
 
 Function Alias-grbo {git rebase --onto $args}
-New-Alias grbo Alias-grbo 
+New-Alias -ErrorAction SilentlyContinue -Name grbo -Value Alias-grbo 
 Function Alias-grbs {git rebase --skip $args}
-New-Alias grbs Alias-grbs 
+New-Alias -ErrorAction SilentlyContinue -Name grbs -Value Alias-grbs 
 Function Alias-grev {git revert $args}
-New-Alias grev Alias-grev 
+New-Alias -ErrorAction SilentlyContinue -Name grev -Value Alias-grev 
 Function Alias-grh {git reset $args}
-New-Alias grh Alias-grh 
+New-Alias -ErrorAction SilentlyContinue -Name grh -Value Alias-grh 
 Function Alias-grhh {git reset --hard $args}
-New-Alias grhh Alias-grhh 
+New-Alias -ErrorAction SilentlyContinue -Name grhh -Value Alias-grhh 
 
 Function Alias-groh {git reset origin/$(git_current_branch) --hard}
-New-Alias groh Alias-groh
+New-Alias -ErrorAction SilentlyContinue -Name groh -Value Alias-groh
 
 Function Alias-grm {git rm $args}
-New-Alias grm Alias-grm 
+New-Alias -ErrorAction SilentlyContinue -Name grm -Value Alias-grm 
 Function Alias-grmc {git rm --cached $args}
-New-Alias grmc Alias-grmc 
+New-Alias -ErrorAction SilentlyContinue -Name grmc -Value Alias-grmc 
 Function Alias-grmv {git remote rename $args}
-New-Alias grmv Alias-grmv 
+New-Alias -ErrorAction SilentlyContinue -Name grmv -Value Alias-grmv 
 Function Alias-grrm {git remote remove $args}
-New-Alias grrm Alias-grrm 
+New-Alias -ErrorAction SilentlyContinue -Name grrm -Value Alias-grrm 
 Function Alias-grs {git restore $args}
-New-Alias grs Alias-grs 
+New-Alias -ErrorAction SilentlyContinue -Name grs -Value Alias-grs 
 Function Alias-grset {git remote set-url $args}
-New-Alias grset Alias-grset 
+New-Alias -ErrorAction SilentlyContinue -Name grset -Value Alias-grset 
 Function Alias-grss {git restore --source $args}
-New-Alias grss Alias-grss 
+New-Alias -ErrorAction SilentlyContinue -Name grss -Value Alias-grss 
 Function Alias-grst {git restore --staged $args}
-New-Alias grst Alias-grst 
+New-Alias -ErrorAction SilentlyContinue -Name grst -Value Alias-grst 
 
 Function Alias-grt
 {
@@ -653,38 +655,38 @@ Function Alias-grt
     $NewPath = '.';
   }
 
-  cd $NewPath;
+  Set-Location $NewPath;
 }
-New-Alias grt Alias-grt
+New-Alias -ErrorAction SilentlyContinue -Name grt -Value Alias-grt
 
 Function Alias-gru {git reset -- $args}
-New-Alias gru Alias-gru 
+New-Alias -ErrorAction SilentlyContinue -Name gru -Value Alias-gru 
 Function Alias-grup {git remote update $args}
-New-Alias grup Alias-grup 
+New-Alias -ErrorAction SilentlyContinue -Name grup -Value Alias-grup 
 Function Alias-grv {git remote -v $args}
-New-Alias grv Alias-grv 
+New-Alias -ErrorAction SilentlyContinue -Name grv -Value Alias-grv 
 
 Function Alias-gsb {git status -sb $args}
-New-Alias gsb Alias-gsb 
+New-Alias -ErrorAction SilentlyContinue -Name gsb -Value Alias-gsb 
 Function Alias-gsd {git svn dcommit $args}
-New-Alias gsd Alias-gsd 
+New-Alias -ErrorAction SilentlyContinue -Name gsd -Value Alias-gsd 
 Function Alias-gsh {git show $args}
-New-Alias gsh Alias-gsh 
+New-Alias -ErrorAction SilentlyContinue -Name gsh -Value Alias-gsh 
 Function Alias-gsi {git submodule init $args}
-New-Alias gsi Alias-gsi 
+New-Alias -ErrorAction SilentlyContinue -Name gsi -Value Alias-gsi 
 Function Alias-gsps {git show --pretty=short --show-signature $args}
-New-Alias gsps Alias-gsps 
+New-Alias -ErrorAction SilentlyContinue -Name gsps -Value Alias-gsps 
 Function Alias-gsr {git svn rebase $args}
-New-Alias gsr Alias-gsr 
+New-Alias -ErrorAction SilentlyContinue -Name gsr -Value Alias-gsr 
 Function Alias-gss {git status -s $args}
-New-Alias gss Alias-gss 
+New-Alias -ErrorAction SilentlyContinue -Name gss -Value Alias-gss 
 Function Alias-gst {git status $args}
-New-Alias gst Alias-gst 
+New-Alias -ErrorAction SilentlyContinue -Name gst -Value Alias-gst 
 
 # TODO: Rewrite to PowerShell syntax. When is-at-least will be implemented
 # use the default stash push on git 2.13 and newer
 Function Alia-gsta {git stash push $args}
-New-Alias gsta Alias-gsta
+New-Alias -ErrorAction SilentlyContinue -Name gsta -Value Alias-gsta
 <#
 is-at-least 2.13 "$git_version" \
   && alias gsta='git stash push' \
@@ -692,51 +694,51 @@ is-at-least 2.13 "$git_version" \
 #>
 
 Function Alias-gstaa {git stash apply $args}
-New-Alias gstaa Alias-gstaa 
+New-Alias -ErrorAction SilentlyContinue -Name gstaa -Value Alias-gstaa 
 Function Alias-gstc {git stash clear $args}
-New-Alias gstc Alias-gstc 
+New-Alias -ErrorAction SilentlyContinue -Name gstc -Value Alias-gstc 
 Function Alias-gstd {git stash drop $args}
-New-Alias gstd Alias-gstd 
+New-Alias -ErrorAction SilentlyContinue -Name gstd -Value Alias-gstd 
 Function Alias-gstl {git stash list $args}
-New-Alias gstl Alias-gstl 
+New-Alias -ErrorAction SilentlyContinue -Name gstl -Value Alias-gstl 
 Function Alias-gstp {git stash pop $args}
-New-Alias gstp Alias-gstp 
+New-Alias -ErrorAction SilentlyContinue -Name gstp -Value Alias-gstp 
 Function Alias-gsts {git stash show --text $args}
-New-Alias gsts Alias-gsts 
+New-Alias -ErrorAction SilentlyContinue -Name gsts -Value Alias-gsts 
 Function Alias-gstu {gsta --include-untracked $args}
-New-Alias gstu Alias-gstu 
+New-Alias -ErrorAction SilentlyContinue -Name gstu -Value Alias-gstu 
 Function Alias-gstall {git stash --all $args}
-New-Alias gstall Alias-gstall 
+New-Alias -ErrorAction SilentlyContinue -Name gstall -Value Alias-gstall 
 Function Alias-gsu {git submodule update $args}
-New-Alias gsu Alias-gsu 
+New-Alias -ErrorAction SilentlyContinue -Name gsu -Value Alias-gsu 
 Function Alias-gsw {git switch $args}
-New-Alias gsw Alias-gsw 
+New-Alias -ErrorAction SilentlyContinue -Name gsw -Value Alias-gsw 
 Function Alias-gswc {git switch -c $args}
-New-Alias gswc Alias-gswc 
+New-Alias -ErrorAction SilentlyContinue -Name gswc -Value Alias-gswc 
 
 Function Alias-gswd {git switch $(git_develop_branch) $args}
-New-Alias gswd Alias-gswd
+New-Alias -ErrorAction SilentlyContinue -Name gswd -Value Alias-gswd
 
 Function Alias-gswm {git switch $(git_main_branch) $args}
-New-Alias gswm Alias-gswm
+New-Alias -ErrorAction SilentlyContinue -Name gswm -Value Alias-gswm
 
 Function Alias-gts {git tag -s $args}
-New-Alias gts Alias-gts 
+New-Alias -ErrorAction SilentlyContinue -Name gts -Value Alias-gts 
 
 # TODO: Rewrite with PowerShell syntax
 <#
 Function Alias-gtv {git tag | sort -V}
-New-Alias gtv Alias-gtv
+New-Alias -ErrorAction SilentlyContinue -Name gtv -Value Alias-gtv
 #>
 
 # TODO: Rewrite with PowerShell syntax
 <#
 Function Alias-gtl {gtl(){ git tag --sort=-v:refname -n -l "${1}*" }; noglob gtl}
-New-Alias gtl Alias-gtl 
+New-Alias -ErrorAction SilentlyContinue -Name gtl -Value Alias-gtl 
 #>
 
 Function Alias-gunignore {git update-index --no-assume-unchanged}
-New-Alias gunignore Alias-gunignore 
+New-Alias -ErrorAction SilentlyContinue -Name gunignore -Value Alias-gunignore 
 
 Function Alias-gunwip
 {
@@ -746,31 +748,31 @@ Function Alias-gunwip
     git reset HEAD~1;
   }
 }
-New-Alias gunwip Alias-gunwip
+New-Alias -ErrorAction SilentlyContinue -Name gunwip -Value Alias-gunwip
 
 Function Alias-gup {git pull --rebase $args}
-New-Alias gup Alias-gup 
+New-Alias -ErrorAction SilentlyContinue -Name gup -Value Alias-gup 
 Function Alias-gupv {git pull --rebase -v $args}
-New-Alias gupv Alias-gupv 
+New-Alias -ErrorAction SilentlyContinue -Name gupv -Value Alias-gupv 
 Function Alias-gupa {git pull --rebase --autostash $args}
-New-Alias gupa Alias-gupa 
+New-Alias -ErrorAction SilentlyContinue -Name gupa -Value Alias-gupa 
 Function Alias-gupav {git pull --rebase --autostash -v $args}
-New-Alias gupav Alias-gupav 
+New-Alias -ErrorAction SilentlyContinue -Name gupav -Value Alias-gupav 
 Function Alias-gupod {git pull --rebase origin $(git_develop_branch) $args}
-New-Alias gupod Alias-gupod
+New-Alias -ErrorAction SilentlyContinue -Name gupod -Value Alias-gupod
 Function Alias-gupom {git pull --rebase origin $(git_main_branch) $args}
-New-Alias gupom Alias-gupom
+New-Alias -ErrorAction SilentlyContinue -Name gupom -Value Alias-gupom
 Function Alias-gupodi {git pull --rebase=interactive origin $(git_develop_branch) $args}
-New-Alias gupodi Alias-gupodi
+New-Alias -ErrorAction SilentlyContinue -Name gupodi -Value Alias-gupodi
 Function Alias-gupomi {git pull --rebase=interactive origin $(git_main_branch) $args}
-New-Alias gupomi Alias-gupomi
+New-Alias -ErrorAction SilentlyContinue -Name gupomi -Value Alias-gupomi
 Function Alias-glud {git pull upstream $(git_develop_branch) $args}
-New-Alias glud Alias-glud
+New-Alias -ErrorAction SilentlyContinue -Name glud -Value Alias-glud
 Function Alias-glum {git pull upstream $(git_main_branch) $args}
-New-Alias glum Alias-glum
+New-Alias -ErrorAction SilentlyContinue -Name glum -Value Alias-glum
 
 Function Alias-gwch {git whatchanged -p --abbrev-commit --pretty=medium $args}
-New-Alias gwch Alias-gwch 
+New-Alias -ErrorAction SilentlyContinue -Name gwch -Value Alias-gwch 
 
 Function Alias-gwip 
 {
@@ -778,18 +780,18 @@ Function Alias-gwip
   git rm $(git ls-files --deleted) 2> $null;
   git commit --no-verify --no-gpg-sign -m "--wip-- [skip ci]";
 }
-New-Alias gwip Alias-gwip 
+New-Alias -ErrorAction SilentlyContinue -Name gwip -Value Alias-gwip 
 
 Function Alias-gam {git am $args}
-New-Alias gam Alias-gam 
+New-Alias -ErrorAction SilentlyContinue -Name gam -Value Alias-gam 
 Function Alias-gamc {git am --continue $args}
-New-Alias gamc Alias-gamc 
+New-Alias -ErrorAction SilentlyContinue -Name gamc -Value Alias-gamc 
 Function Alias-gams {git am --skip $args}
-New-Alias gams Alias-gams 
+New-Alias -ErrorAction SilentlyContinue -Name gams -Value Alias-gams 
 Function Alias-gama {git am --abort $args}
-New-Alias gama Alias-gama 
+New-Alias -ErrorAction SilentlyContinue -Name gama -Value Alias-gama 
 Function Alias-gamscp {git am --show-current-patch $args}
-New-Alias gamscp Alias-gamscp 
+New-Alias -ErrorAction SilentlyContinue -Name gamscp -Value Alias-gamscp 
 
 # TODO: Rewrite with PowerShell syntax
 <#
